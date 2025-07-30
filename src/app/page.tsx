@@ -31,6 +31,7 @@ export default function SignupPage() {
     }
     return true;
   }
+  
   async function handleSubmit(e: any) {
     e.preventDefault();
     setIsSubmitting(true);
