@@ -1,0 +1,7 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 18, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/app/page.tsx"],"sourcesContent":["import  { useState } from \"react\";\n\n\nexport default function SignupPage() {\n  const [isOpen, setIsopen] = useState(false);\n  return (\n    <form>\n      <label>Username:</label>\n      <input type=\"text\" name=\"username\" required />\n      <br />\n      <label>Password:</label>\n      <input type=\"password\" name=\"password\" required />\n      <br />\n      <button type=\"submit\">Sign up</button>\n    </form>\n  );\n}"],"names":[],"mappings":";;;;AAAA;;;AAGe,SAAS;IACtB,MAAM,CAAC,QAAQ,UAAU,GAAG,CAAA,GAAA,qMAAA,CAAA,WAAQ,AAAD,EAAE;IACrC,qBACE,8OAAC;;0BACC,8OAAC;0BAAM;;;;;;0BACP,8OAAC;gBAAM,MAAK;gBAAO,MAAK;gBAAW,QAAQ;;;;;;0BAC3C,8OAAC;;;;;0BACD,8OAAC;0BAAM;;;;;;0BACP,8OAAC;gBAAM,MAAK;gBAAW,MAAK;gBAAW,QAAQ;;;;;;0BAC/C,8OAAC;;;;;0BACD,8OAAC;gBAAO,MAAK;0BAAS;;;;;;;;;;;;AAG5B","debugId":null}}]
+}
