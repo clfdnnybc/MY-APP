@@ -1,9 +1,10 @@
 {
-  "/SignUp/page": "app/SignUp/page.js",
   "/_not-found/page": "app/_not-found/page.js",
+  "/api/account/username/route": "app/api/account/username/route.js",
+  "/api/auth/route": "app/api/auth/route.js",
+  "/dashboard/account/page": "app/dashboard/account/page.js",
   "/dashboard/page": "app/dashboard/page.js",
+  "/dashboard/settings/page": "app/dashboard/settings/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
-  "/page": "app/page.js",
-  "/signin/page": "app/signin/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/login/page": "app/login/page.js"
 }

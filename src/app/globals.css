@@ -1,32 +1,41 @@
+/* globals.css */
 @import "tailwindcss";
+@plugin "@iconify/tailwind4";
+@custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --duration: 500ms;
 }
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 html {
-  overflow-x: hidden;
+  color-scheme: light;
+  transition: color-scheme var(--duration) ease;
+  font-size: var(--user-font);
+  zoom: var(--user-zoom);
+  transition: font-size 0.3s ease, zoom 0.3s ease;
+}
+.dark {
+  color-scheme: dark;
+  transition: color-scheme var(--duration) ease;
+}
+.bg-background,
+.text-foreground,
+.border-border-color,
+.fill-current,
+.stroke-current {
+  transition: background-color var(--duration) ease,
+              color var(--duration) ease,
+              border-color var(--duration) ease,
+              fill var(--duration) ease,
+              stroke var(--duration) ease;
+}
+@layer base {
+  :root {
+    --icon-account: url('/account.svg');
+    --icon-settings: url('/settings.svg');
+  }
+
+  .dark {
+    --icon-account: url('/account-dark.svg');
+    --icon-settings: url('/settings-dark.svg');
+  }
 }
