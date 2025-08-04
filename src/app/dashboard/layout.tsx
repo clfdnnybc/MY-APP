@@ -57,7 +57,7 @@ export default function DashboardLayout({ children }: Props) {
           {/* 侧边栏开关按钮 */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
-            className="mr-4 p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-600"
+            className="mr-4 p-2 rounded hover:bg-blue-200 dark:hover:bg-gray-600"
           >
             <span className={`w-5 h-5 icon-[mynaui--menu] dark:color-white`} />
           </button>
