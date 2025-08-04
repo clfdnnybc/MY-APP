@@ -6,36 +6,69 @@
 :root {
   --duration: 500ms;
 }
+
+/* 只设置一次 color-scheme，去除 transition，避免闪烁 */
 html {
   color-scheme: light;
-  transition: color-scheme var(--duration) ease;
   font-size: var(--user-font);
   zoom: var(--user-zoom);
   transition: font-size 0.3s ease, zoom 0.3s ease;
 }
 .dark {
   color-scheme: dark;
-  transition: color-scheme var(--duration) ease;
 }
-.bg-background,
-.text-foreground,
-.border-border-color,
-.fill-current,
-.stroke-current {
-  transition: background-color var(--duration) ease,
-              color var(--duration) ease,
-              border-color var(--duration) ease,
-              fill var(--duration) ease,
-              stroke var(--duration) ease;
+body,
+html {
+  transition:
+    background-color var(--duration) ease,
+    color var(--duration) ease,
+    border-color var(--duration) ease;
 }
+
+/* 统一所有颜色相关属性的过渡 */
+/* *,
+*::before,
+*::after {
+  transition:
+    background-color var(--duration) ease,
+    color var(--duration) ease,
+    border-color var(--duration) ease,
+    fill var(--duration) ease,
+    stroke var(--duration) ease;
+} */
+
+/* 为 body 添加背景色和过渡，提升体验 */
+body {
+  background-color: #f9fafb;
+  transition: background-color var(--duration) ease;
+}
+.dark body {
+  background-color: #18181b;
+}
+
+/* 基础变量和图标 */
 @layer base {
   :root {
     --icon-account: url('/account.svg');
     --icon-settings: url('/settings.svg');
   }
-
   .dark {
     --icon-account: url('/account-dark.svg');
     --icon-settings: url('/settings-dark.svg');
+  }
+  html {
+    color-scheme: light dark;
+  }
+}
+
+/* 弹窗动画 */
+@keyframes popup-move-scale {
+  0% {
+    opacity: 0;
+    transform: var(--popup-transform-from, scale(0.5) translate(-50%, -50%));
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translate(-50%, -50%);
   }
 }

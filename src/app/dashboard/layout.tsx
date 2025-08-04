@@ -1,16 +1,24 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { useUsername } from "../UsernameContext";
+import { useTransitionRouter } from 'next-view-transitions'
+import { useTranslation } from "react-i18next";
 
 interface Props {
   children: ReactNode;
 }
 
 export default function DashboardLayout({ children }: Props) {
-  const router = useRouter();
   const [showLogout, setShowLogout] = useState(false);
-  const [sidebarOpen, setSidebarOpen] = useState(false); // 侧边栏开关
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [logoutPos, setLogoutPos] = useState<{ x: number; y: number } | null>(null);
+  const router = useTransitionRouter();
+  const { t, i18n } = useTranslation();
+  const [mounted, setMounted] = useState(false); // 新增
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const handleLogout = () => {
     setShowLogout(false);
@@ -19,19 +27,49 @@ export default function DashboardLayout({ children }: Props) {
 
   const { username } = useUsername();
 
-  // 侧边栏与弹窗共用的菜单项
-  const menuItems = [
-    { label: "Home", href: "/dashboard", icon: "icon-[mynaui--home]" },
-    { label: "Account", href: "/dashboard/account", icon: "icon-[mynaui--user]" },
-    { label: "Settings", href: "/dashboard/settings", icon: "icon-[mynaui--cog-four]" },
-    { label: "Logout", action: () => setShowLogout(true), icon: "icon-[mynaui--logout]" },
+  const handleLogoutClick = (e: React.MouseEvent) => {
+    const rect = (e.target as HTMLElement).getBoundingClientRect();
+    if (rect.width === 0 && rect.height === 0) {
+      setLogoutPos({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    } else {
+      const x = rect.left + rect.width / 2;
+      const y = rect.top + rect.height / 2;
+      setLogoutPos({ x, y });
+    }
+    setShowLogout(true);
+  };
+
+  type MenuItem = 
+    | { label: string; href: string; icon: string; action?: undefined }
+    | { label: string; icon: string; action: (e: React.MouseEvent) => void; href?: undefined };
+
+  // 只在 mounted 后渲染依赖 t 的内容，避免 hydration mismatch
+  if (!mounted) return <div />;
+
+  const menuItems: MenuItem[] = [
+    { label: t("dashboard"), href: "/dashboard", icon: "icon-[mynaui--home]" },
+    { label: t("account"), href: "/dashboard/account", icon: "icon-[mynaui--user]" },
+    { label: t("settings"), href: "/dashboard/settings", icon: "icon-[mynaui--cog-four]" },
+    { label: t("logout"), action: handleLogoutClick, icon: "icon-[mynaui--logout]" },
   ];
+
+  const getPopupStyle = () => {
+    if (!logoutPos) return {};
+    const centerX = window.innerWidth / 2;
+    const centerY = window.innerHeight / 2;
+    const dx = logoutPos.x - centerX;
+    const dy = logoutPos.y - centerY;
+    return {
+      ["--popup-transform-from" as any]: `scale(0) translate(${dx}px, ${dy}px)`,
+      animation: "popup-move-scale 0.4s cubic-bezier(.4,2,.6,1) forwards",
+    } as React.CSSProperties;
+  };
 
   return (
     <div className="flex h-screen">
       {/* 侧边栏 */}
       <aside
-        className={`flex flex-col bg-white dark:bg-gray-800 transition-all duration-300 ${
+        className={`flex flex-col bg-white dark:bg-gray-800 transition-all duration-300  ${
           sidebarOpen ? "w-56" : "w-0"
         }`}
       >
@@ -39,12 +77,22 @@ export default function DashboardLayout({ children }: Props) {
           {menuItems.map((item) => (
             <button
               key={item.label}
-              onClick={() => (item.action ? item.action() : router.push(item.href))}
+              onClick={
+                item.action
+                  ? (e) => item.action && item.action(e)
+                  : () => item.href && router.push(item.href)
+              }
               title={item.label}
-              className="flex items-center w-full px-2 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900"
+              className={`w-full flex items-center px-3 py-2 rounded
+                ${item.label === t('logout')
+                  ? 'bg-red-500 text-white dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700'
+                  : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900'
+                }
+                ${!sidebarOpen && 'hidden'}
+              `}
             >
               {sidebarOpen && <span className={`w-5 h-5 ${item.icon} dark:color-white`} />}
-              {sidebarOpen && <span className="ml-3 text-sm text-gray-700 dark:text-gray-200">{item.label}</span>}
+              {sidebarOpen && <span className="ml-3 text-sm">{item.label}</span>}
             </button>
           ))}
         </div>
@@ -53,7 +101,7 @@ export default function DashboardLayout({ children }: Props) {
       {/* 主内容区 */}
       <div className="flex-1 flex flex-col">
         {/* Header */}
-        <header className="bg-blue-100 dark:bg-gray-700 p-6 shadow-md flex items-center">
+        <header className="bg-blue-100 dark:bg-gray-700 p-6 h-16 shadow-md flex items-center">
           {/* 侧边栏开关按钮 */}
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
@@ -89,8 +137,16 @@ export default function DashboardLayout({ children }: Props) {
               {menuItems.map((item) => (
                 <button
                   key={item.label}
-                  onClick={() => (item.action ? item.action() : router.push(item.href))}
-                  className="w-full flex items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-900 text-gray-700 dark:text-gray-200"
+                  onClick={
+                    item.action
+                      ? (e) => item.action && item.action(e)
+                      : () => item.href && router.push(item.href)
+                  }
+                  className={`w-full flex items-center px-3 py-2 rounded
+                    ${item.label === t('logout')
+                      ? 'bg-red-500 text-white dark:bg-red-600 hover:bg-red-600 dark:hover:bg-red-700'
+                      : 'text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-900'
+                    }`}
                 >
                   <span className={`w-4 h-4 mr-2 ${item.icon} dark:color-white`} />
                   {item.label}
@@ -104,13 +160,22 @@ export default function DashboardLayout({ children }: Props) {
 
         {/* Logout 确认弹窗 */}
         {showLogout && (
-          <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
-            <div className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-80">
-              <h2 className="text-lg font-semibold mb-4">Confirm logout</h2>
-              <p className="text-sm text-gray-600 mb-6">Are you sure you want to log out?</p>
+          <div className="fixed inset-0 bg-black/40 z-50">
+            <div
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-80"
+              style={{
+                ...getPopupStyle(),
+                position: "fixed",
+                left: "50%",
+                top: "50%",
+              }}
+              key={logoutPos ? `${logoutPos.x},${logoutPos.y}` : "center"}
+            >
+              <h2 className="text-lg font-semibold mb-4">{t("confirmLogout")}</h2>
+              <p className="text-sm text-gray-600 mb-6">{t("confirmTips")}</p>
               <div className="flex justify-end space-x-3">
-                <button onClick={() => setShowLogout(false)} className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900">No</button>
-                <button onClick={handleLogout} className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">Yes</button>
+                <button onClick={() => setShowLogout(false)} className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900">{t("cancel")}</button>
+                <button onClick={handleLogout} className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700">{t("confirm")}</button>
               </div>
             </div>
           </div>

@@ -3,5 +3,5 @@
   "sources": [],
   "sections": [
     {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
-    {"offset": {"line": 22, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/app/dashboard/page.tsx"],"sourcesContent":["export default function DashboardHome() {\n  return (\n    <div className=\"text-2xl font-bold\">\n      Welcome to My Dashboard!\n    </div>\n  );\n}"],"names":[],"mappings":";;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;kBAAqB;;;;;;AAIxC","debugId":null}}]
+    {"offset": {"line": 22, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/app/dashboard/page.tsx"],"sourcesContent":["export default function DashboardHome() {\n  return (\n    <div className=\"relative h-32\">\n      Welcome to My Dashboard!\n    </div>\n  );\n}"],"names":[],"mappings":";;;;;AAAe,SAAS;IACtB,qBACE,8OAAC;QAAI,WAAU;kBAAgB;;;;;;AAInC","debugId":null}}]
 }

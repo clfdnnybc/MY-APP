@@ -1,0 +1,24 @@
+import i18n from "i18next";
+import { initReactI18next } from "react-i18next";
+import LanguageDetector from "i18next-browser-languagedetector";
+import en from "./locales/en.json";
+import zh from "./locales/zh.json";
+
+i18n
+  .use(LanguageDetector) // 加上这一行
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      zh: { translation: zh },
+    },
+    fallbackLng: "en", // 默认英文
+    interpolation: { escapeValue: false },
+    detection: {
+      // 优先级：localStorage > navigator > html lang
+      order: ["localStorage", "navigator", "htmlTag"],
+      caches: ["localStorage"], // 语言写入 localStorage
+    },
+  });
+
+export default i18n;
