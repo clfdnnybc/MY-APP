@@ -4,18 +4,13 @@ import { useUsername } from "../../UsernameContext";
 import { useTranslation } from "react-i18next";
 
 export default function SettingsPage() {
-  const { dark, toggleDark, font, setFont, zoom, setZoom, lang, setLang } = useUsername();
+  const { dark, toggleDark, font, setFont, zoom, setZoom } = useUsername();
   const [mounted, setMounted] = useState(false);
   const { t, i18n } = useTranslation();
-
+  
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // 语言切换时同步 i18n
-  useEffect(() => {
-    i18n.changeLanguage(lang);
-  }, [lang, i18n]);
 
   // SSR 时返回空壳，避免 mismatch
   if (!mounted) {
@@ -37,7 +32,15 @@ export default function SettingsPage() {
 
       <div>
         <label className="block mb-1 font-medium">{t("language")}</label>
-        <select value={lang} onChange={(e) => setLang(e.target.value)} className="w-full p-2 border rounded dark:bg-gray-800">
+        <select
+          value={i18n.language}
+          onChange={(e) => {
+            const lng = e.target.value;
+            i18n.changeLanguage(lng);
+            localStorage.setItem("i18nextLng", lng); // 保持持久化
+          }}
+          className="w-full p-2 border rounded dark:bg-gray-800"
+        >
           <option value="en">English</option>
           <option value="zh">中文</option>
         </select>

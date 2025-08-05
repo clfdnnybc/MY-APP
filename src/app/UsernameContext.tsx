@@ -1,6 +1,6 @@
-// app/UsernameContext.tsx
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+import i18n from "../i18n";
 
 type Ctx = {
   username: string;
@@ -11,8 +11,6 @@ type Ctx = {
   setFont: (f: string) => void;
   zoom: string;
   setZoom: (z: string) => void;
-  lang: string;
-  setLang: (l: string) => void;
 };
 
 const UsernameContext = createContext<Ctx>({
@@ -24,37 +22,34 @@ const UsernameContext = createContext<Ctx>({
   setFont: () => {},
   zoom: "100",
   setZoom: () => {},
-  lang: "en",
-  setLang: () => {},
 });
 
 export const useUsername = () => useContext(UsernameContext);
 
 export const UsernameProvider = ({ children }: { children: ReactNode }) => {
-  /* 1. 先给服务端默认值，避免 localStorage 报错 */
   const [username, setUsername] = useState("Admin");
   const [dark, setDark]   = useState(false);
   const [font, setFont]   = useState("16");
   const [zoom, setZoom]   = useState("100");
-  const [lang, setLang]   = useState("en");
 
-  /* 2. 客户端挂载后读取 localStorage */
   useEffect(() => {
+    // 从 localStorage 读取设置
+    const storedDark = localStorage.getItem("dark") === "true";
     setUsername(localStorage.getItem("username") || "Admin");
-    setDark(localStorage.getItem("dark") === "true");
+    setDark(storedDark);
     setFont(localStorage.getItem("font") || "16");
     setZoom(localStorage.getItem("zoom") || "100");
-    setLang(localStorage.getItem("lang") || "en");
+    
+    // 立即应用暗模式类名
+    document.documentElement.classList.toggle("dark", storedDark);
   }, []);
 
-  /* 3. 任何改动持久化到 localStorage 并立即生效 */
   useEffect(() => {
     localStorage.setItem("username", username);
     localStorage.setItem("dark", String(dark));
     localStorage.setItem("font", font);
     localStorage.setItem("zoom", zoom);
-    localStorage.setItem("lang", lang);
-  }, [username, dark, font, zoom, lang]);
+  }, [username, dark, font, zoom]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -73,8 +68,6 @@ export const UsernameProvider = ({ children }: { children: ReactNode }) => {
         setFont,
         zoom,
         setZoom,
-        lang,
-        setLang,
       }}
     >
       {children}

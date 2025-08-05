@@ -28,6 +28,7 @@ export default function SignupPage() {
   function handleLangChange(e: React.ChangeEvent<HTMLSelectElement>) {
     setLang(e.target.value);
     i18n.changeLanguage(e.target.value);
+    localStorage.setItem("i18nextLng", e.target.value);
   }
 
   function changeOpen(m: "login" | "signup") {
@@ -109,17 +110,27 @@ export default function SignupPage() {
         <h1 className="text-2xl font-bold text-gray-800 dark:text-gray-100 sm:text-3xl">
           {t("myDashboard")}
         </h1>
+      </div>
+      {/* 右上角透明语言切换 */}
+      <div className="absolute top-4 right-4 z-20">
         <select
           value={lang}
           onChange={handleLangChange}
-          className="rounded border px-2 py-1 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100"
+          className="
+            bg-white/50  backdrop-blur-sm
+            border border-white/20
+            rounded px-2 py-1 text-xs
+            text-black
+            dark:bg-gray-900/20 dark:border-white/30
+            dark:text-white
+            transition-colors duration-200
+            focus:outline-none focus:ring-2 focus:ring-blue-400
+          "
         >
           <option value="en">English</option>
-          <option value="zh">中文</option>
-          
+          <option value="zh">简体中文</option>
         </select>
       </div>
-
       {/* 原卡片 */}
       <div className="relative z-10 w-full max-w-md rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800">
         <div className="flex space-x-2">

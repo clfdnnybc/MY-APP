@@ -8,7 +8,7 @@ import "../i18n";
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <ViewTransitions>
-    <html lang="en">
+    <html lang="en" translate="no">
       <body className="flex flex-col min-h-screen">
         {/* 使用一个不破坏布局的包装元素 */}
         

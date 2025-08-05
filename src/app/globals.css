@@ -5,48 +5,25 @@
 
 :root {
   --duration: 500ms;
+  --bg-light: #f9fafb;
+  --bg-dark: #18181b;
 }
 
-/* 只设置一次 color-scheme，去除 transition，避免闪烁 */
+
 html {
   color-scheme: light;
   font-size: var(--user-font);
   zoom: var(--user-zoom);
   transition: font-size 0.3s ease, zoom 0.3s ease;
 }
-.dark {
+
+html.dark {
   color-scheme: dark;
 }
-body,
-html {
-  transition:
-    background-color var(--duration) ease,
-    color var(--duration) ease,
-    border-color var(--duration) ease;
-}
 
-/* 统一所有颜色相关属性的过渡 */
-/* *,
-*::before,
-*::after {
-  transition:
-    background-color var(--duration) ease,
-    color var(--duration) ease,
-    border-color var(--duration) ease,
-    fill var(--duration) ease,
-    stroke var(--duration) ease;
-} */
 
-/* 为 body 添加背景色和过渡，提升体验 */
-body {
-  background-color: #f9fafb;
-  transition: background-color var(--duration) ease;
-}
-.dark body {
-  background-color: #18181b;
-}
 
-/* 基础变量和图标 */
+
 @layer base {
   :root {
     --icon-account: url('/account.svg');
@@ -56,19 +33,14 @@ body {
     --icon-account: url('/account-dark.svg');
     --icon-settings: url('/settings-dark.svg');
   }
-  html {
-    color-scheme: light dark;
-  }
 }
 
-/* 弹窗动画 */
-@keyframes popup-move-scale {
-  0% {
-    opacity: 0;
-    transform: var(--popup-transform-from, scale(0.5) translate(-50%, -50%));
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1) translate(-50%, -50%);
-  }
+
+.fly-center {
+  position: fixed;
+  animation: flyCenter 0.5s ease-out forwards;
+}
+@keyframes flyCenter {
+  0%   { left: var(--x, 0); top: var(--y, 0); transform: translate(-50%,-50%) scale(0); }
+  100% { left: 50vw; top: 50vh; transform: translate(-50%,-50%) scale(1); }
 }

@@ -21,7 +21,7 @@ var _s = __turbopack_context__.k.signature();
 ;
 function SettingsPage() {
     _s();
-    const { dark, toggleDark, font, setFont, zoom, setZoom, lang, setLang } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"])();
+    const { dark, toggleDark, font, setFont, zoom, setZoom } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"])();
     const [mounted, setMounted] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const { t, i18n } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"])();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
@@ -29,22 +29,13 @@ function SettingsPage() {
             setMounted(true);
         }
     }["SettingsPage.useEffect"], []);
-    // 语言切换时同步 i18n
-    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
-        "SettingsPage.useEffect": ()=>{
-            i18n.changeLanguage(lang);
-        }
-    }["SettingsPage.useEffect"], [
-        lang,
-        i18n
-    ]);
     // SSR 时返回空壳，避免 mismatch
     if (!mounted) {
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
             className: "max-w-lg mx-auto p-8 h-96"
         }, void 0, false, {
             fileName: "[project]/src/app/dashboard/settings/page.tsx",
-            lineNumber: 22,
+            lineNumber: 17,
             columnNumber: 12
         }, this); // 占位即可
     }
@@ -56,7 +47,7 @@ function SettingsPage() {
                 children: t("settings")
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                lineNumber: 27,
+                lineNumber: 22,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -66,7 +57,7 @@ function SettingsPage() {
                         children: t("darkMode")
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 31,
+                        lineNumber: 26,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
@@ -79,26 +70,26 @@ function SettingsPage() {
                                 className: "sr-only peer"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 33,
+                                lineNumber: 28,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                                 className: "w-11 h-6 bg-gray-200 rounded-full peer peer-checked:bg-blue-600 peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 34,
+                                lineNumber: 29,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 32,
+                        lineNumber: 27,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                lineNumber: 30,
+                lineNumber: 25,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -108,12 +99,16 @@ function SettingsPage() {
                         children: t("language")
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 39,
+                        lineNumber: 34,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
-                        value: lang,
-                        onChange: (e)=>setLang(e.target.value),
+                        value: i18n.language,
+                        onChange: (e)=>{
+                            const lng = e.target.value;
+                            i18n.changeLanguage(lng);
+                            localStorage.setItem("i18nextLng", lng); // 保持持久化
+                        },
                         className: "w-full p-2 border rounded dark:bg-gray-800",
                         children: [
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -121,7 +116,7 @@ function SettingsPage() {
                                 children: "English"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 41,
+                                lineNumber: 44,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -129,19 +124,19 @@ function SettingsPage() {
                                 children: "中文"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 42,
+                                lineNumber: 45,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 40,
+                        lineNumber: 35,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                lineNumber: 38,
+                lineNumber: 33,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -151,7 +146,7 @@ function SettingsPage() {
                         children: t("fontSize")
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 47,
+                        lineNumber: 50,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -164,7 +159,7 @@ function SettingsPage() {
                                 children: "14px"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 49,
+                                lineNumber: 52,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -172,7 +167,7 @@ function SettingsPage() {
                                 children: "16px"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 50,
+                                lineNumber: 53,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -180,19 +175,19 @@ function SettingsPage() {
                                 children: "18px"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 51,
+                                lineNumber: 54,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 48,
+                        lineNumber: 51,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                lineNumber: 46,
+                lineNumber: 49,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -202,7 +197,7 @@ function SettingsPage() {
                         children: t("zoomLevel")
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 56,
+                        lineNumber: 59,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("select", {
@@ -215,7 +210,7 @@ function SettingsPage() {
                                 children: "90%"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 58,
+                                lineNumber: 61,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -223,7 +218,7 @@ function SettingsPage() {
                                 children: "100%"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 59,
+                                lineNumber: 62,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("option", {
@@ -231,29 +226,29 @@ function SettingsPage() {
                                 children: "110%"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                                lineNumber: 60,
+                                lineNumber: 63,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                        lineNumber: 57,
+                        lineNumber: 60,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/settings/page.tsx",
-                lineNumber: 55,
+                lineNumber: 58,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/settings/page.tsx",
-        lineNumber: 26,
+        lineNumber: 21,
         columnNumber: 5
     }, this);
 }
-_s(SettingsPage, "3x6XfPfZfgFRCBDXAZAQezFvlqQ=", false, function() {
+_s(SettingsPage, "QMz+hLZMueDWoxnMo9LSEXfJwbw=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"]

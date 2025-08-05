@@ -2,7 +2,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUsername } from "../../UsernameContext";
-import { useTranslation } from "react-i18next"; // 新增
+import { useTranslation } from "react-i18next"; 
+
 
 export default function AccountPage() {
   const { username, setUsername } = useUsername();

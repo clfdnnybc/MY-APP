@@ -11,7 +11,6 @@ module.exports = mod;
 "[project]/src/app/UsernameContext.tsx [app-ssr] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 
-// app/UsernameContext.tsx
 __turbopack_context__.s({
     "UsernameProvider": ()=>UsernameProvider,
     "useUsername": ()=>useUsername
@@ -29,36 +28,34 @@ const UsernameContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$pro
     font: "16",
     setFont: ()=>{},
     zoom: "100",
-    setZoom: ()=>{},
-    lang: "en",
-    setLang: ()=>{}
+    setZoom: ()=>{}
 });
 const useUsername = ()=>(0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useContext"])(UsernameContext);
 const UsernameProvider = ({ children })=>{
-    /* 1. 先给服务端默认值，避免 localStorage 报错 */ const [username, setUsername] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("Admin");
+    const [username, setUsername] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("Admin");
     const [dark, setDark] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
     const [font, setFont] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("16");
     const [zoom, setZoom] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("100");
-    const [lang, setLang] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])("en");
-    /* 2. 客户端挂载后读取 localStorage */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+        // 从 localStorage 读取设置
+        const storedDark = localStorage.getItem("dark") === "true";
         setUsername(localStorage.getItem("username") || "Admin");
-        setDark(localStorage.getItem("dark") === "true");
+        setDark(storedDark);
         setFont(localStorage.getItem("font") || "16");
         setZoom(localStorage.getItem("zoom") || "100");
-        setLang(localStorage.getItem("lang") || "en");
+        // 立即应用暗模式类名
+        document.documentElement.classList.toggle("dark", storedDark);
     }, []);
-    /* 3. 任何改动持久化到 localStorage 并立即生效 */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         localStorage.setItem("username", username);
         localStorage.setItem("dark", String(dark));
         localStorage.setItem("font", font);
         localStorage.setItem("zoom", zoom);
-        localStorage.setItem("lang", lang);
     }, [
         username,
         dark,
         font,
-        zoom,
-        lang
+        zoom
     ]);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         document.documentElement.classList.toggle("dark", dark);
@@ -78,14 +75,12 @@ const UsernameProvider = ({ children })=>{
             font,
             setFont,
             zoom,
-            setZoom,
-            lang,
-            setLang
+            setZoom
         },
         children: children
     }, void 0, false, {
         fileName: "[project]/src/app/UsernameContext.tsx",
-        lineNumber: 66,
+        lineNumber: 61,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -116,7 +111,7 @@ module.exports = mod;
 }}),
 "[project]/src/locales/en.json (json)": ((__turbopack_context__) => {
 
-__turbopack_context__.v(JSON.parse("{\"dashboard\":\"Dashboard\",\"logout\":\"Logout\",\"settings\":\"Settings\",\"account\":\"Account\",\"confirmTips\":\"Are you sure you want to log out?\",\"confirmLogout\":\"Confirm Logout\",\"cancel\":\"No\",\"confirm\":\"Yes\",\"login\":\"Login\",\"signup\":\"Sign Up\",\"username\":\"Username\",\"password\":\"Password\",\"passwordNotMatch\":\"Passwords do not match\",\"confirmPassword\":\"Confirm Password\",\"processing\":\"Processing...\",\"createAccount\":\"Create Account\",\"myDashboard\":\"My Dashboard\",\"darkMode\":\"Dark Mode\",\"language\":\"Language\",\"fontSize\":\"Font Size\",\"zoomLevel\":\"Zoom Level\",\"accountSettings\":\"Account Settings\",\"edit\":\"Edit\",\"updateUsername\":\"Update Username\",\"updatePassword\":\"Update Password\",\"currentPassword\":\"Current Password\",\"newPassword\":\"New Password\",\"editUsernameTip\":\"Click \\\"Edit\\\" to change your username.\",\"editPasswordTip\":\"Click \\\"Edit\\\" to change your password.\"}"));}),
+__turbopack_context__.v(JSON.parse("{\"dashboard\":\"Dashboard\",\"logout\":\"Logout\",\"settings\":\"Settings\",\"account\":\"Account\",\"confirmTips\":\"Are you sure you want to log out?\",\"confirmLogout\":\"Confirm Logout\",\"cancel\":\"Cancel\",\"confirm\":\"Yes\",\"login\":\"Login\",\"signup\":\"Sign Up\",\"username\":\"Username\",\"password\":\"Password\",\"passwordNotMatch\":\"Passwords do not match\",\"confirmPassword\":\"Confirm Password\",\"processing\":\"Processing...\",\"createAccount\":\"Create Account\",\"myDashboard\":\"My Dashboard\",\"darkMode\":\"Dark Mode\",\"language\":\"Language\",\"fontSize\":\"Font Size\",\"zoomLevel\":\"Zoom Level\",\"accountSettings\":\"Account Settings\",\"edit\":\"Edit\",\"updateUsername\":\"Update Username\",\"updatePassword\":\"Update Password\",\"currentPassword\":\"Current Password\",\"newPassword\":\"New Password\",\"editUsernameTip\":\"Click \\\"Edit\\\" to change your username.\",\"editPasswordTip\":\"Click \\\"Edit\\\" to change your password.\"}"));}),
 "[project]/src/locales/zh.json (json)": ((__turbopack_context__) => {
 
 __turbopack_context__.v(JSON.parse("{\"dashboard\":\"仪表盘\",\"logout\":\"退出登录\",\"settings\":\"设置\",\"account\":\"账户\",\"confirmTips\":\"你确定要退出登录吗？\",\"confirmLogout\":\"确认退出登录\",\"cancel\":\"取消\",\"confirm\":\"确定\",\"login\":\"登录\",\"signup\":\"注册\",\"username\":\"用户名\",\"password\":\"密码\",\"passwordNotMatch\":\"两次密码输入不一致\",\"confirmPassword\":\"确认密码\",\"processing\":\"处理中...\",\"createAccount\":\"创建账户\",\"myDashboard\":\"我的仪表盘\",\"darkMode\":\"深色模式\",\"language\":\"语言\",\"fontSize\":\"字体大小\",\"zoomLevel\":\"缩放比例\",\"accountSettings\":\"账户设置\",\"edit\":\"编辑\",\"updateUsername\":\"更新用户名\",\"updatePassword\":\"更新密码\",\"currentPassword\":\"当前密码\",\"newPassword\":\"新密码\",\"editUsernameTip\":\"点击“编辑”修改用户名。\",\"editPasswordTip\":\"点击“编辑”修改密码。\"}"));}),
@@ -185,6 +180,7 @@ function RootLayout({ children }) {
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2d$view$2d$transitions$2f$dist$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["ViewTransitions"], {
         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("html", {
             lang: "en",
+            translate: "no",
             children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("body", {
                 className: "flex flex-col min-h-screen",
                 children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["UsernameProvider"], {
