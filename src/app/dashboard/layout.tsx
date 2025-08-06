@@ -13,7 +13,7 @@ export default function DashboardLayout({ children }: Props) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [logoutPos, setLogoutPos] = useState<{ x: number; y: number } | null>(null);
   const router = useRouter();
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
   const [mounted, setMounted] = useState(false);
   const pathname = usePathname();
 
@@ -32,6 +32,10 @@ export default function DashboardLayout({ children }: Props) {
     
   };
   
+  type CSSPropertiesWithVars = React.CSSProperties & {
+    '--x'?: string;
+    '--y'?: string;
+  };
 
   type MenuItem = 
     | { label: string; href: string; icon: string; action?: undefined }
@@ -158,13 +162,12 @@ export default function DashboardLayout({ children }: Props) {
           <div
             className="bg-white dark:bg-gray-800 rounded-lg shadow-xl p-6 w-80 fly-center"
             style={{
-              // 只需要传递鼠标位置变量
-              ["--x" as any]: `${logoutPos?.x || 0}px`,
-              ["--y" as any]: `${logoutPos?.y || 0}px`,
-            }}
+                '--x': `${logoutPos?.x || 0}px`,
+                '--y': `${logoutPos?.y || 0}px`,
+              } as CSSPropertiesWithVars}
           >
-            <h2 className="text-lg font-semibold mb-4">{t("confirmLogout")}</h2>
-            <p className="text-sm text-gray-600 mb-6">{t("confirmTips")}</p>
+            <h2 className="text-lg text-gray-800 dark:text-gray-200 font-semibold mb-4">{t("confirmLogout")}</h2>
+            <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">{t("confirmTips")}</p>
             <div className="flex justify-end space-x-3">
               <button onClick={() => setShowLogout(false)} className="px-4 py-2 rounded border border-gray-300 hover:bg-gray-100 dark:hover:bg-gray-900">
                 {t("cancel")}

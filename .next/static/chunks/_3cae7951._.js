@@ -101,7 +101,7 @@ function SignupPage() {
                 });
             }
         } catch (err) {
-            setMessage(err.message);
+            setMessage(err instanceof Error ? err.message : "Login failed");
         } finally{
             setIsSubmitting(false);
         }

@@ -179,29 +179,37 @@ const pool = __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$mys
 });
 async function POST(req) {
     const { username, password, mode } = await req.json();
+    // 使用正确的类型声明
     const [rows] = await pool.query("SELECT * FROM users WHERE username = ?", [
         username
     ]);
+    // 现在 rows 是 User[] 类型
     const user = rows[0];
     if (mode === "signup") {
-        if (user) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-            message: "User exists"
-        }, {
-            status: 409
-        });
-        await pool.query("INSERT INTO users (username, password) VALUES (?, ?)", [
+        if (user) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                message: "User exists"
+            }, {
+                status: 409
+            });
+        }
+        const hashedPassword = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].hash(password, 12);
+        await pool.execute("INSERT INTO users (username, password) VALUES (?, ?)", [
             username,
-            await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].hash(password, 12)
+            hashedPassword
         ]);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: "Registered"
         });
     }
-    if (!user || !await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].compare(password, user.password)) return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
-        message: "Invalid credentials"
-    }, {
-        status: 401
-    });
+    // 现在可以安全访问 user.password
+    if (!user || !await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$bcryptjs$2f$index$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["default"].compare(password, user.password)) {
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            message: "Invalid credentials"
+        }, {
+            status: 401
+        });
+    }
     return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
         message: "Login success"
     });

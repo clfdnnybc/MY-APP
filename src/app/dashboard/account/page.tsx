@@ -14,7 +14,6 @@ export default function AccountPage() {
   const [newPassword, setNewPassword] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const router = useRouter();
   const { t } = useTranslation(); // 新增
 
   const closeAllForms = () => {
@@ -55,8 +54,8 @@ export default function AccountPage() {
       setUsername(newUsername);
       localStorage.setItem("username", newUsername);
       closeAllForms();
-    } catch (err: any) {
-      setMessage(err.message);
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setIsSubmitting(false);
     }
@@ -76,8 +75,8 @@ export default function AccountPage() {
       if (!res.ok) throw new Error(json.message);
       setMessage(json.message);
       closeAllForms();
-    } catch (err: any) {
-      setMessage(err.message);
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Unknown error");
     } finally {
       setIsSubmitting(false);
     }

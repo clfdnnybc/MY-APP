@@ -1790,6 +1790,10 @@
     color: var(--color-gray-200);
   }
 
+  .dark\:text-gray-300:where(.dark, .dark *) {
+    color: var(--color-gray-300);
+  }
+
   .dark\:text-gray-400:where(.dark, .dark *) {
     color: var(--color-gray-400);
   }

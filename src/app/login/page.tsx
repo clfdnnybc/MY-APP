@@ -78,8 +78,8 @@ export default function SignupPage() {
         setMode("login");
         setData({ username: "", password: "", confirmPassword: "" });
       }
-    } catch (err: any) {
-      setMessage(err.message);
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Login failed");
     } finally {
       setIsSubmitting(false);
     }
