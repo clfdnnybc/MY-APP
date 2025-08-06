@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useState, useEffect } from "react";
+import { useRouter, usePathname } from "next/navigation";
 import { useUsername } from "../UsernameContext";
-import { useTransitionRouter } from 'next-view-transitions'
 import { useTranslation } from "react-i18next";
 
 interface Props {
@@ -12,9 +12,10 @@ export default function DashboardLayout({ children }: Props) {
   const [showLogout, setShowLogout] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [logoutPos, setLogoutPos] = useState<{ x: number; y: number } | null>(null);
-  const router = useTransitionRouter();
+  const router = useRouter();
   const { t, i18n } = useTranslation();
   const [mounted, setMounted] = useState(false);
+  const pathname = usePathname();
 
   useEffect(() => {
     setMounted(true);
@@ -46,7 +47,7 @@ export default function DashboardLayout({ children }: Props) {
   ];
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen bg-white dark:bg-black">
       <aside
         className={`flex flex-col bg-white dark:bg-gray-800 transition-all duration-300 ${
           sidebarOpen ? "w-56" : "w-0"
@@ -145,7 +146,12 @@ export default function DashboardLayout({ children }: Props) {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto p-6">
+          <div key={pathname} className="page-transition">
+            {children}
+          </div>
+        </main>
+
 
         {showLogout && (
         <div className="fixed inset-0 bg-black/40 z-50">

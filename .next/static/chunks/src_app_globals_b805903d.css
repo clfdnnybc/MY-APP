@@ -1857,6 +1857,22 @@ html.dark {
   }
 }
 
+.page-transition {
+  animation: .3s ease-in-out forwards fadeIn;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 @property --tw-translate-x {
   syntax: "*";
   inherits: false;
