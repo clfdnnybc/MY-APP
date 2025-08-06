@@ -5,8 +5,7 @@ import type { UserField } from '@/types/db';
 
 export async function POST(req: NextRequest) {
   try {
-    const { username, password, mode } = await req.json();
-     console.log('请求到达API'); // 添加起始日志
+    const { username, password, mode } = await req.json(); 
     
     // 增强输入验证
     if (!username || !password) {
@@ -66,9 +65,7 @@ export async function POST(req: NextRequest) {
       userId: user.id // 返回用户ID供客户端使用
     });
   } catch (error: unknown) {
-    console.error('完整错误:', error); // 输出完整错误对象
-    const errorStack = error instanceof Error ? error.stack : '无堆栈信息';
-    console.error('错误堆栈:', errorStack);
+
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
       
