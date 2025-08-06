@@ -64,11 +64,13 @@ export async function POST(req: NextRequest) {
       message: "Login successful",
       userId: user.id // 返回用户ID供客户端使用
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
+      
       {
         message: "Authentication failed",
-        detail: process.env.NODE_ENV === "development" ? error.message : undefined
+        detail: process.env.NODE_ENV === "development" ? errorMessage : undefined
       },
       { status: 500 }
     );

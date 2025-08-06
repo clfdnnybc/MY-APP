@@ -58,11 +58,13 @@ export async function PUT(req: NextRequest) {
         updatedAt: new Date().toISOString() // 返回更新时间
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
     return NextResponse.json(
+      
       { 
         message: "Password update failed",
-        detail: process.env.NODE_ENV === "development" ? error.message : undefined
+        detail: process.env.NODE_ENV === "development" ? errorMessage : undefined
       },
       { status: 500 }
     );

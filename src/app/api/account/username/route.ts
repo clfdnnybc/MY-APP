@@ -38,11 +38,13 @@ export async function PUT(req: NextRequest) {
         newUsername // 返回新用户名以便客户端更新
       }
     );
-  } catch (error: any) {
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    const errorCode = error instanceof Error && 'code' in error ? error.code : undefined;
     return NextResponse.json(
       { 
-        message: "Username update failed: " + (error.message || "Database error"),
-        code: error.code // 传递数据库错误代码
+        message: "Username update failed: " + (errorMessage || "Database error"),
+        code: errorCode // 传递数据库错误代码
       },
       { status: 500 }
     );

@@ -1,4 +1,4 @@
-import { RowDataPacket, FieldPacket } from 'mysql2';
+import { RowDataPacket } from 'mysql2';
 
 // 扩展 RowDataPacket 类型
 declare module 'mysql2' {

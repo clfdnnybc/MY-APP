@@ -1,6 +1,5 @@
 import mysql from 'serverless-mysql';
 import type { RowDataPacket } from 'mysql2';
-import type { User } from '@/types/db';
 
 const db = mysql({
   config: {
@@ -17,7 +16,7 @@ const db = mysql({
 
 export async function query<T extends RowDataPacket>(
   sql: string,
-  values?: any
+  values?: unknown
 ): Promise<T[]> {
   try {
     const results = await db.query<T[]>(sql, values);
