@@ -1,6 +1,5 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useUsername } from "../../UsernameContext";
 import { useTranslation } from "react-i18next"; 
 
