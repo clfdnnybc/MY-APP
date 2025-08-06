@@ -25,11 +25,7 @@ export default function SignupPage() {
   }, [i18n.language]);
 
   // 语言切换
-  function handleLangChange(e: React.ChangeEvent<HTMLSelectElement>) {
-    setLang(e.target.value);
-    i18n.changeLanguage(e.target.value);
-    localStorage.setItem("i18nextLng", e.target.value);
-  }
+
 
   function changeOpen(m: "login" | "signup") {
     if (mode === m) {
@@ -115,7 +111,11 @@ export default function SignupPage() {
       <div className="absolute top-4 right-4 z-20">
         <select
           value={lang}
-          onChange={handleLangChange}
+          onChange={(e) => {
+            const lng = e.target.value;
+            i18n.changeLanguage(lng);
+            localStorage.setItem("i18nextLng", lng); // 保持持久化
+          }}
           className="
             bg-white/50  backdrop-blur-sm
             border border-white/20

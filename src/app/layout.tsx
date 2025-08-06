@@ -10,7 +10,7 @@ interface Props {
 
 export default function RootLayout({ children }: Props) {
   return (
-    <html lang="en" translate="no">
+    <html translate="no">
       <body className="flex flex-col min-h-screen">
         <UsernameProvider>
           {children}

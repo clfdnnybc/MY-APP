@@ -203,6 +203,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$
 async function POST(req) {
     try {
         const { username, password, mode } = await req.json();
+        console.log('请求到达API'); // 添加起始日志
         // 增强输入验证
         if (!username || !password) {
             return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -211,11 +212,13 @@ async function POST(req) {
                 status: 400
             });
         }
+        console.log('DB_HOST:', process.env.DB_HOST);
         // 精确查询只返回必要字段
         const users = await (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__["query"])("SELECT id, password FROM users WHERE username = ? LIMIT 1", [
             username
         ]);
         const user = users[0];
+        console.log('Query results:', users);
         if (mode === "signup") {
             if (user) {
                 return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -255,9 +258,13 @@ async function POST(req) {
             userId: user.id // 返回用户ID供客户端使用
         });
     } catch (error) {
+        console.error('完整错误:', error); // 输出完整错误对象
+        const errorStack = error instanceof Error ? error.stack : '无堆栈信息';
+        console.error('错误堆栈:', errorStack);
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: "Authentication failed",
-            detail: ("TURBOPACK compile-time truthy", 1) ? error.message : "TURBOPACK unreachable"
+            detail: ("TURBOPACK compile-time truthy", 1) ? errorMessage : "TURBOPACK unreachable"
         }, {
             status: 500
         });
