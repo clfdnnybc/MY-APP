@@ -1,53 +1,76 @@
 import { NextRequest, NextResponse } from "next/server";
-import mysql from "mysql2/promise";
 import bcrypt from "bcryptjs";
-import { User } from "@/types/db";
-
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",  
-  database: "userinfo",
-  waitForConnections: true,
-  connectionLimit: 10,
-});
+import { query } from "@/lib/db";
+import type { UserField } from '@/types/db';
 
 export async function POST(req: NextRequest) {
-  const { username, password, mode } = await req.json();
-  
-  // 使用正确的类型声明
-  const [rows] = await pool.query<User[]>(
-    "SELECT * FROM users WHERE username = ?", 
-    [username]
-  );
-  
-  // 现在 rows 是 User[] 类型
-  const user = rows[0];
-
-  if (mode === "signup") {
-    if (user) {
+  try {
+    const { username, password, mode } = await req.json();
+    
+    // 增强输入验证
+    if (!username || !password) {
       return NextResponse.json(
-        { message: "User exists" }, 
-        { status: 409 }
+        { message: "Username and password are required" },
+        { status: 400 }
+      );
+    }
+
+    // 精确查询只返回必要字段
+    const users = await query<UserField<'id' | 'password'>>(
+      "SELECT id, password FROM users WHERE username = ? LIMIT 1",
+      [username]
+    );
+    const user = users[0];
+
+    if (mode === "signup") {
+      if (user) {
+        return NextResponse.json(
+          { message: "Username already registered" },
+          { status: 409 }
+        );
+      }
+      
+      // 密码强度验证
+      if (password.length < 8) {
+        return NextResponse.json(
+          { message: "Password must be at least 8 characters" },
+          { status: 400 }
+        );
+      }
+
+      const hashedPassword = await bcrypt.hash(password, 12);
+      await query(
+        "INSERT INTO users (username, password) VALUES (?, ?)",
+        [username, hashedPassword]
+      );
+      
+      return NextResponse.json(
+        { 
+          message: "Registration successful",
+          username // 返回注册成功的用户名
+        }
+      );
+    }
+
+    // 登录逻辑
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return NextResponse.json(
+        { message: "Invalid username or password" }, // 模糊化错误信息
+        { status: 401 }
       );
     }
     
-    const hashedPassword = await bcrypt.hash(password, 12);
-    await pool.execute(
-      "INSERT INTO users (username, password) VALUES (?, ?)", 
-      [username, hashedPassword]
-    );
-    
-    return NextResponse.json({ message: "Registered" });
-  }
-
-  // 现在可以安全访问 user.password
-  if (!user || !(await bcrypt.compare(password, user.password))) {
+    return NextResponse.json({
+      message: "Login successful",
+      userId: user.id // 返回用户ID供客户端使用
+    });
+  } catch (error: any) {
     return NextResponse.json(
-      { message: "Invalid credentials" }, 
-      { status: 401 }
+      {
+        message: "Authentication failed",
+        detail: process.env.NODE_ENV === "development" ? error.message : undefined
+      },
+      { status: 500 }
     );
   }
-  
-  return NextResponse.json({ message: "Login success" });
 }

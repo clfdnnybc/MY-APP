@@ -1,67 +1,69 @@
 import { NextRequest, NextResponse } from "next/server";
-import mysql from "mysql2/promise";
 import bcrypt from "bcryptjs";
-import { User } from "@/types/db";
-
-const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database: "userinfo",
-  waitForConnections: true,
-  connectionLimit: 10,
-});
+import { query } from "@/lib/db";
+import type { UserField } from '@/types/db';
 
 export async function PUT(req: NextRequest) {
   try {
     const { oldPassword, newPassword, storedUsername } = await req.json();
     
-    if (!storedUsername || !oldPassword || !newPassword) {
+    // 增强输入验证
+    if (!oldPassword || !newPassword || !storedUsername) {
       return NextResponse.json(
-        { message: "Missing required fields" },
+        { message: "All fields are required" },
         { status: 400 }
       );
     }
 
-    // 类型安全的查询
-    const [rows] = await pool.query<User[]>(
-      "SELECT * FROM users WHERE username = ?",
+    if (newPassword.length < 8) {
+      return NextResponse.json(
+        { message: "Password must be at least 8 characters" },
+        { status: 400 }
+      );
+    }
+
+    // 精确查询只返回必要字段
+    const users = await query<UserField<'password'>>(
+      "SELECT password FROM users WHERE username = ? LIMIT 1",
       [storedUsername]
     );
-    
-    const user = rows[0];
+    const user = users[0];
 
     if (!user) {
       return NextResponse.json(
-        { message: "User not found" },
+        { message: "Account not found" }, // 避免暴露用户存在信息
         { status: 404 }
       );
     }
 
-    // 验证旧密码
-    const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
-    if (!isPasswordValid) {
+    // 密码验证
+    const isMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!isMatch) {
       return NextResponse.json(
-        { message: "Invalid current password" },
+        { message: "Current password is incorrect" }, // 更友好的错误消息
         { status: 401 }
       );
     }
 
     // 更新密码
     const hashedPassword = await bcrypt.hash(newPassword, 12);
-    await pool.execute(
+    await query(
       "UPDATE users SET password = ? WHERE username = ?",
       [hashedPassword, storedUsername]
     );
 
     return NextResponse.json(
-      { message: "Password updated successfully" }
+      { 
+        message: "Password updated successfully",
+        updatedAt: new Date().toISOString() // 返回更新时间
+      }
     );
-
-  } catch (error: unknown) {
-    const errorMessage = error instanceof Error ? error.message : "Unknown error";
+  } catch (error: any) {
     return NextResponse.json(
-      { message: `Password update failed: ${errorMessage}` },
+      { 
+        message: "Password update failed",
+        detail: process.env.NODE_ENV === "development" ? error.message : undefined
+      },
       { status: 500 }
     );
   }

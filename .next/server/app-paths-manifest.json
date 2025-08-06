@@ -1,6 +1,5 @@
 {
   "/api/auth/route": "app/api/auth/route.js",
-  "/dashboard/account/page": "app/dashboard/account/page.js",
   "/dashboard/page": "app/dashboard/page.js",
   "/dashboard/settings/page": "app/dashboard/settings/page.js",
   "/favicon.ico/route": "app/favicon.ico/route.js",
