@@ -1,7 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
 import bcrypt from "bcryptjs";
-import { query } from "@/lib/db";
-import type { UserField } from '@/types/db';
+import { User } from "@/types/db";
+
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "userinfo",
+  waitForConnections: true,
+  connectionLimit: 10,
+});
 
 export async function PUT(req: NextRequest) {
   try {

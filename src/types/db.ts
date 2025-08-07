@@ -1,20 +1,13 @@
-import { RowDataPacket } from 'mysql2';
+// src/types/db.ts
+import { RowDataPacket, FieldPacket } from "mysql2/promise";
 
-// 扩展 RowDataPacket 类型
-declare module 'mysql2' {
-  interface RowDataPacket {
-    constructor: {
-      name: 'RowDataPacket';
-    };
-  }
-}
-
-// 用户类型定义
 export interface User extends RowDataPacket {
   id: number;
   username: string;
   password: string;
+  created_at?: Date;
+  updated_at?: Date;
 }
 
-// 创建完整的类型工具
-export type UserField<K extends keyof User> = Pick<User, K> & RowDataPacket;
+// 使用精确的 FieldPacket 类型替代 any
+export type QueryResult<T extends RowDataPacket> = [T[], FieldPacket[]];

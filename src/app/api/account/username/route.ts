@@ -1,6 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import { query } from "@/lib/db";
-import type { UserField } from '@/types/db';
+import mysql from "mysql2/promise";
+import { User } from "@/types/db";
+
+const pool = mysql.createPool({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database: "userinfo",
+  waitForConnections: true,
+  connectionLimit: 10,
+});
 
 export async function PUT(req: NextRequest) {
   try {
