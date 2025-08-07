@@ -10,6 +10,7 @@
     "deploy": "npm install --legacy-peer-deps && vercel build"
   },
   "dependencies": {
+    "@vercel/postgres": "^0.10.0",
     "bcryptjs": "^3.0.2",
     "framer-motion": "^12.23.12",
     "i18next": "^25.3.2",

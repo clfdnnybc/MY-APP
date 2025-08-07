@@ -1,4 +1,5 @@
-import pool from './db';
+// lib/news.ts
+import { sql } from '@/lib/db';
 
 export interface News {
   id?: number;
@@ -8,65 +9,37 @@ export interface News {
   published: boolean;
 }
 
-export const getNews = async (publishedOnly: boolean = true) => {
-  const connection = await pool.getConnection();
-  try {
-    let query = 'SELECT * FROM news';
-    if (publishedOnly) query += ' WHERE published = true';
-    query += ' ORDER BY date DESC';
-    
-    const [rows] = await connection.query(query);
-    return rows as News[];
-  } finally {
-    connection.release();
-  }
+export const getNews = async (publishedOnly = true) => {
+  const { rows } = publishedOnly
+    ? await sql`SELECT * FROM news WHERE published = true ORDER BY date DESC`
+    : await sql`SELECT * FROM news ORDER BY date DESC`;
+  return rows as News[];
 };
 
 export const getNewsById = async (id: number) => {
-  const connection = await pool.getConnection();
-  try {
-    const [rows] = await connection.query(
-      'SELECT * FROM news WHERE id = ?', 
-      [id]
-    );
-    return (rows as News[])[0];
-  } finally {
-    connection.release();
-  }
+  const { rows } = await sql`SELECT * FROM news WHERE id = ${id}`;
+  return rows[0] as News | undefined;
 };
 
 export const createNews = async (news: Omit<News, 'id'>) => {
-  const connection = await pool.getConnection();
-  try {
-    const [result] = await connection.query(
-      'INSERT INTO news (title, content, date, published) VALUES (?, ?, ?, ?)',
-      [news.title, news.content, news.date, news.published]
-    );
-    return (result as any).insertId;
-  } finally {
-    connection.release();
-  }
+  const { rows } = await sql`
+    INSERT INTO news (title, content, date, published)
+    VALUES (${news.title}, ${news.content}, ${news.date}, ${news.published})
+    RETURNING id
+  `;
+  return rows[0].id as number;
 };
 
 export const updateNews = async (id: number, news: Partial<News>) => {
-  const connection = await pool.getConnection();
-  try {
-    await connection.query(
-      'UPDATE news SET title = ?, content = ?, published = ? WHERE id = ?',
-      [news.title, news.content, news.published, id]
-    );
-    return true;
-  } finally {
-    connection.release();
-  }
+  await sql`
+    UPDATE news
+    SET title = ${news.title}, content = ${news.content}, published = ${news.published}
+    WHERE id = ${id}
+  `;
+  return true;
 };
 
 export const deleteNews = async (id: number) => {
-  const connection = await pool.getConnection();
-  try {
-    await connection.query('DELETE FROM news WHERE id = ?', [id]);
-    return true;
-  } finally {
-    connection.release();
-  }
+  await sql`DELETE FROM news WHERE id = ${id}`;
+  return true;
 };

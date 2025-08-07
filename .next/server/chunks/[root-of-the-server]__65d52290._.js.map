@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 162, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/lib/db.ts"],"sourcesContent":["// lib/db.ts\nexport { sql } from '@vercel/postgres';"],"names":[],"mappings":"AAAA,YAAY;;AACZ","debugId":null}},
+    {"offset": {"line": 185, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/app/api/news/all/route.ts"],"sourcesContent":["// app/api/news/all/route.ts\nimport { sql } from '@/lib/db';\nimport { NextResponse } from 'next/server';\n\nexport async function GET() {\n  try {\n    const rows = await sql`SELECT * FROM news ORDER BY date DESC`;\n    return NextResponse.json(rows);\n  } catch (error) {\n    console.error('Database error:', error);\n    return NextResponse.json([], { status: 200 });\n  }\n}"],"names":[],"mappings":"AAAA,4BAA4B;;;;AAC5B;AAAA;AACA;;;AAEO,eAAe;IACpB,IAAI;QACF,MAAM,OAAO,MAAM,mLAAA,CAAA,MAAG,CAAC,qCAAqC,CAAC;QAC7D,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;IAC3B,EAAE,OAAO,OAAO;QACd,QAAQ,KAAK,CAAC,mBAAmB;QACjC,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC,EAAE,EAAE;YAAE,QAAQ;QAAI;IAC7C;AACF","debugId":null}}]
+}
