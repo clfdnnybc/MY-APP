@@ -14,14 +14,12 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-    console.log('DB_HOST:', process.env.DB_HOST);
     // 精确查询只返回必要字段
     const users = await query<UserField<'id' | 'password'>>(
       "SELECT id, password FROM users WHERE username = ? LIMIT 1",
       [username]
     );
     const user = users[0];
-    console.log('Query results:', users); 
     if (mode === "signup") {
       if (user) {
         return NextResponse.json(
