@@ -4,11 +4,11 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }  
 ) {
   try {
-    const id = Number(params.id);
-    await sql`DELETE FROM news WHERE id = ${id}`;
+    const { id } = await params;        
+    await sql`DELETE FROM news WHERE id = ${Number(id)}`;
     return NextResponse.json({ message: 'Deleted' });
   } catch (error) {
     console.error('Delete error:', error);
