@@ -3,6 +3,7 @@ import bcrypt from 'bcryptjs';
 import { NextRequest, NextResponse } from 'next/server';
 
 export async function POST(req: NextRequest) {
+  console.log('POSTGRES_URL=', process.env.POSTGRES_URL);
   const { username, password, mode } = await req.json();
 
   const result = await sql`SELECT * FROM users WHERE username = ${username}`;
