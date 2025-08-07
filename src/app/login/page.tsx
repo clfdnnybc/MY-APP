@@ -69,7 +69,7 @@ export default function SignupPage() {
       if (mode === "login") {
         localStorage.setItem("username", data.username);
         setUsername(data.username);
-        setTimeout(() => router.push("/dashboard"), 1000);
+        setTimeout(() => router.push("/dashboard"), 300);
       } else {
         setMode("login");
         setData({ username: "", password: "", confirmPassword: "" });

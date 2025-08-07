@@ -1,5 +1,5 @@
 {
-  "dashboard": "仪表盘",
+  "dashboard": "主页",
   "logout": "退出登录",
   "settings": "设置",
   "account": "账户",
@@ -27,8 +27,9 @@
   "currentPassword": "当前密码",
   "newPassword": "新密码",
   "editUsernameTip": "点击“编辑”修改用户名。",
-  "editPasswordTip": "点击“编辑”修改密码。"
+  "editPasswordTip": "点击“编辑”修改密码。",
 
+  "newsManagement": "新闻管理"
 
   
 }

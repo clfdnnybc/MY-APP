@@ -1,5 +1,5 @@
 {
-  "dashboard": "Dashboard",
+  "dashboard": "Home",
   "logout": "Logout",
   "settings": "Settings",
   "account": "Account",
@@ -27,8 +27,8 @@
   "currentPassword": "Current Password",
   "newPassword": "New Password",
   "editUsernameTip": "Click \"Edit\" to change your username.",
-  "editPasswordTip": "Click \"Edit\" to change your password."
+  "editPasswordTip": "Click \"Edit\" to change your password.",
 
-
+  "newsManagement" : "News Management"
   
 }

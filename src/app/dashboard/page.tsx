@@ -25,10 +25,15 @@ export default function DashboardHome() {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
+        
+        const data = await response.json();
+        
         // 确保数据是数组
-        const json = await response.json();
-        if (!Array.isArray(json.rows)) throw new Error('Invalid data format');
-        setNews(json.rows);
+        if (!Array.isArray(data)) {
+          throw new Error('Invalid data format received');
+        }
+        
+        setNews(data);
         setFetchError(null);
       } catch (error) {
         console.error('Fetch error:', error);
@@ -119,9 +124,17 @@ export default function DashboardHome() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {news.map(item => (
-          <div key={item.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            {/* 新闻卡片内容 */}
-          </div>
+          <Link href={`/news/${item.id}`} key={item.id}>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition-shadow">
+              <h2 className="text-lg font-semibold mb-2 truncate">{item.title}</h2>
+              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                {new Date(item.date).toLocaleDateString()}
+              </p>
+              <p className="text-sm text-gray-700 dark:text-gray-200 line-clamp-3">
+                {item.content}
+              </p>
+            </div>
+          </Link>
         ))}
       </div>
     </div>

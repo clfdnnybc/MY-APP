@@ -194,6 +194,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$serv
 ;
 ;
 async function POST(req) {
+    console.log('POSTGRES_URL=', process.env.POSTGRES_URL);
     const { username, password, mode } = await req.json();
     const result = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM users WHERE username = ${username}`;
     const user = result.rows[0];

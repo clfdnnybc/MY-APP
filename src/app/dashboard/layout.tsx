@@ -44,8 +44,9 @@ export default function DashboardLayout({ children }: Props) {
   if (!mounted) return <div />;
 
   const menuItems: MenuItem[] = [
-    { label: t("news"), href: "/dashboard/news", icon: "icon-[mynaui--home]" },
+    
     { label: t("dashboard"), href: "/dashboard", icon: "icon-[mynaui--home]" },
+    { label: t("newsManagement"), href: "/dashboard/news", icon: "icon-[mynaui--home]" },
     { label: t("account"), href: "/dashboard/account", icon: "icon-[mynaui--user]" },
     { label: t("settings"), href: "/dashboard/settings", icon: "icon-[mynaui--cog-four]" },
     { label: t("logout"), action: handleLogoutClick, icon: "icon-[mynaui--logout]" },
