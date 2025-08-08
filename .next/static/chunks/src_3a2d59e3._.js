@@ -5,6 +5,7 @@
 
 var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
+// app/contexts/UsernameContext.tsx  （路径可保持原样）
 __turbopack_context__.s({
     "UsernameProvider": ()=>UsernameProvider,
     "useUsername": ()=>useUsername
@@ -18,6 +19,8 @@ var _s = __turbopack_context__.k.signature(), _s1 = __turbopack_context__.k.sign
 const UsernameContext = /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["createContext"])({
     username: "Admin",
     setUsername: ()=>{},
+    avatar: "/avatar.ico",
+    setAvatar: ()=>{},
     dark: false,
     toggleDark: ()=>{},
     font: "16",
@@ -34,30 +37,31 @@ const UsernameProvider = (param)=>{
     let { children } = param;
     _s1();
     const [username, setUsername] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("Admin");
+    const [avatar, setAvatar] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("/avatar.ico");
     const [dark, setDark] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [font, setFont] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("16");
     const [zoom, setZoom] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("100");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "UsernameProvider.useEffect": ()=>{
-            // 从 localStorage 读取设置
-            const storedDark = localStorage.getItem("dark") === "true";
-            setUsername(localStorage.getItem("username") || "Admin");
-            setDark(storedDark);
+            /* 从 localStorage 读取 */ setUsername(localStorage.getItem("username") || "Admin");
+            setAvatar(localStorage.getItem("avatar") || "/avatar.ico");
+            setDark(localStorage.getItem("dark") === "true");
             setFont(localStorage.getItem("font") || "16");
             setZoom(localStorage.getItem("zoom") || "100");
-            // 立即应用暗模式类名
-            document.documentElement.classList.toggle("dark", storedDark);
+            document.documentElement.classList.toggle("dark", localStorage.getItem("dark") === "true");
         }
     }["UsernameProvider.useEffect"], []);
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "UsernameProvider.useEffect": ()=>{
-            localStorage.setItem("username", username);
+            /* 写入 localStorage */ localStorage.setItem("username", username);
+            localStorage.setItem("avatar", avatar);
             localStorage.setItem("dark", String(dark));
             localStorage.setItem("font", font);
             localStorage.setItem("zoom", zoom);
         }
     }["UsernameProvider.useEffect"], [
         username,
+        avatar,
         dark,
         font,
         zoom
@@ -77,6 +81,8 @@ const UsernameProvider = (param)=>{
         value: {
             username,
             setUsername,
+            avatar,
+            setAvatar,
             dark,
             toggleDark: ()=>setDark((d)=>!d),
             font,
@@ -87,11 +93,11 @@ const UsernameProvider = (param)=>{
         children: children
     }, void 0, false, {
         fileName: "[project]/src/app/UsernameContext.tsx",
-        lineNumber: 61,
+        lineNumber: 66,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s1(UsernameProvider, "HUiqlpH44mZ3wcx7fHdBfjUvhr4=");
+_s1(UsernameProvider, "tJTQ+EZYCW6PkEd7nOPZq4R9Ubw=");
 _c = UsernameProvider;
 var _c;
 __turbopack_context__.k.register(_c, "UsernameProvider");
@@ -101,10 +107,10 @@ if (typeof globalThis.$RefreshHelpers$ === 'object' && globalThis.$RefreshHelper
 }}),
 "[project]/src/locales/en.json (json)": ((__turbopack_context__) => {
 
-__turbopack_context__.v(JSON.parse("{\"dashboard\":\"Home\",\"logout\":\"Logout\",\"settings\":\"Settings\",\"account\":\"Account\",\"confirmTips\":\"Are you sure you want to log out?\",\"confirmLogout\":\"Confirm Logout\",\"cancel\":\"Cancel\",\"confirm\":\"Yes\",\"login\":\"Login\",\"signup\":\"Sign Up\",\"username\":\"Username\",\"password\":\"Password\",\"passwordNotMatch\":\"Passwords do not match\",\"confirmPassword\":\"Confirm Password\",\"processing\":\"Processing...\",\"createAccount\":\"Create Account\",\"myDashboard\":\"My Dashboard\",\"darkMode\":\"Dark Mode\",\"language\":\"Language\",\"fontSize\":\"Font Size\",\"zoomLevel\":\"Zoom Level\",\"accountSettings\":\"Account Settings\",\"edit\":\"Edit\",\"updateUsername\":\"Update Username\",\"updatePassword\":\"Update Password\",\"currentPassword\":\"Current Password\",\"newPassword\":\"New Password\",\"editUsernameTip\":\"Click \\\"Edit\\\" to change your username.\",\"editPasswordTip\":\"Click \\\"Edit\\\" to change your password.\",\"newsManagement\":\"News Management\"}"));}),
+__turbopack_context__.v(JSON.parse("{\"account\":\"Account\",\"accountSettings\":\"Account Settings\",\"addNews\":\"Add News\",\"avatar\":\"Avatar\",\"cancel\":\"Cancel\",\"confirm\":\"Confirm\",\"confirmLogout\":\"Confirm Logout\",\"confirmPassword\":\"Confirm Password\",\"confirmTips\":\"Are you sure you want to log out?\",\"content\":\"Content\",\"createAccount\":\"Create Account\",\"createFirstNews\":\"Create your first news\",\"currentPassword\":\"Current Password\",\"dashboard\":\"Home\",\"darkMode\":\"Dark Mode\",\"date\":\"Date\",\"delete\":\"Delete\",\"edit\":\"Edit\",\"editAvatarTip\":\"Click \\\"Edit\\\" to change your avatar.\",\"editNews\":\"Edit News\",\"editPasswordTip\":\"Click \\\"Edit\\\" to change your password.\",\"editUsernameTip\":\"Click \\\"Edit\\\" to change your username.\",\"fetchError\":\"Failed to load data\",\"fontSize\":\"Font Size\",\"language\":\"Language\",\"latestNews\":\"Latest News\",\"loading\":\"Loading...\",\"login\":\"Login\",\"logout\":\"Logout\",\"myDashboard\":\"My Dashboard\",\"newPassword\":\"New Password\",\"newsManagement\":\"News Management\",\"noNews\":\"No news yet\",\"noNewsDescription\":\"Start by creating your first piece of news.\",\"noNewsTitle\":\"No news available\",\"notFound\":\"News not found\",\"password\":\"Password\",\"passwordNotMatch\":\"Passwords do not match\",\"processing\":\"Processing...\",\"published\":\"Published\",\"retry\":\"Retry\",\"save\":\"Save\",\"saveError\":\"Failed to save\",\"saving\":\"Saving...\",\"settings\":\"Settings\",\"signup\":\"Sign Up\",\"status\":\"Status\",\"title\":\"Title\",\"updateAvatar\":\"Update Avatar\",\"updatePassword\":\"Update Password\",\"updateUsername\":\"Update Username\",\"username\":\"Username\",\"view\":\"View\",\"zoomLevel\":\"Zoom Level\"}"));}),
 "[project]/src/locales/zh.json (json)": ((__turbopack_context__) => {
 
-__turbopack_context__.v(JSON.parse("{\"dashboard\":\"主页\",\"logout\":\"退出登录\",\"settings\":\"设置\",\"account\":\"账户\",\"confirmTips\":\"你确定要退出登录吗？\",\"confirmLogout\":\"确认退出登录\",\"cancel\":\"取消\",\"confirm\":\"确定\",\"login\":\"登录\",\"signup\":\"注册\",\"username\":\"用户名\",\"password\":\"密码\",\"passwordNotMatch\":\"两次密码输入不一致\",\"confirmPassword\":\"确认密码\",\"processing\":\"处理中...\",\"createAccount\":\"创建账户\",\"myDashboard\":\"我的仪表盘\",\"darkMode\":\"深色模式\",\"language\":\"语言\",\"fontSize\":\"字体大小\",\"zoomLevel\":\"缩放比例\",\"accountSettings\":\"账户设置\",\"edit\":\"编辑\",\"updateUsername\":\"更新用户名\",\"updatePassword\":\"更新密码\",\"currentPassword\":\"当前密码\",\"newPassword\":\"新密码\",\"editUsernameTip\":\"点击“编辑”修改用户名。\",\"editPasswordTip\":\"点击“编辑”修改密码。\",\"newsManagement\":\"新闻管理\"}"));}),
+__turbopack_context__.v(JSON.parse("{\"account\":\"账户\",\"accountSettings\":\"账户设置\",\"addNews\":\"添加新闻\",\"avatar\":\"头像\",\"cancel\":\"取消\",\"confirm\":\"确定\",\"confirmLogout\":\"确认退出登录\",\"confirmPassword\":\"确认密码\",\"confirmTips\":\"你确定要退出登录吗？\",\"content\":\"内容\",\"createAccount\":\"创建账户\",\"createFirstNews\":\"创建你的第一条新闻\",\"currentPassword\":\"当前密码\",\"dashboard\":\"主页\",\"darkMode\":\"深色模式\",\"date\":\"日期\",\"delete\":\"删除\",\"edit\":\"编辑\",\"editAvatarTip\":\"点击“编辑”修改头像。\",\"editNews\":\"编辑新闻\",\"editPasswordTip\":\"点击“编辑”修改密码。\",\"editUsernameTip\":\"点击“编辑”修改用户名。\",\"fetchError\":\"加载失败\",\"fontSize\":\"字体大小\",\"language\":\"语言\",\"latestNews\":\"最新新闻\",\"loading\":\"加载中...\",\"login\":\"登录\",\"logout\":\"退出登录\",\"myDashboard\":\"我的仪表盘\",\"newPassword\":\"新密码\",\"newsManagement\":\"新闻管理\",\"noNews\":\"暂无新闻\",\"noNewsDescription\":\"开始创建你的第一条新闻吧。\",\"noNewsTitle\":\"暂无新闻\",\"notFound\":\"新闻不存在\",\"password\":\"密码\",\"passwordNotMatch\":\"两次密码输入不一致\",\"processing\":\"处理中...\",\"published\":\"已发布\",\"retry\":\"重试\",\"save\":\"保存\",\"saveError\":\"保存失败\",\"saving\":\"保存中...\",\"settings\":\"设置\",\"signup\":\"注册\",\"status\":\"状态\",\"title\":\"标题\",\"updateAvatar\":\"更新头像\",\"updatePassword\":\"更新密码\",\"updateUsername\":\"更新用户名\",\"username\":\"用户名\",\"view\":\"查看\",\"zoomLevel\":\"缩放比例\"}"));}),
 "[project]/src/i18n.ts [app-client] (ecmascript)": ((__turbopack_context__) => {
 "use strict";
 

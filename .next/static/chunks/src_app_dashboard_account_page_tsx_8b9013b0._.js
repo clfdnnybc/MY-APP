@@ -5,6 +5,7 @@
 
 var { k: __turbopack_refresh__, m: module } = __turbopack_context__;
 {
+// app/dashboard/account/page.tsx
 __turbopack_context__.s({
     "default": ()=>AccountPage
 });
@@ -22,17 +23,21 @@ var _s = __turbopack_context__.k.signature();
 function AccountPage() {
     _s();
     const { username, setUsername } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"])();
+    const { avatar, setAvatar } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"])();
     const [showUsernameForm, setShowUsernameForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [showPasswordForm, setShowPasswordForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
+    const [showAvatarForm, setShowAvatarForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
     const [newUsername, setNewUsername] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [oldPassword, setOldPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [newPassword, setNewPassword] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [selectedAvatar, setSelectedAvatar] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
     const [message, setMessage] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     const [isSubmitting, setIsSubmitting] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"])(); // 新增
+    const { t } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"])();
     const closeAllForms = ()=>{
         setShowUsernameForm(false);
         setShowPasswordForm(false);
+        setShowAvatarForm(false);
     };
     const handleChange = (e)=>{
         const { name, value } = e.target;
@@ -103,17 +108,43 @@ function AccountPage() {
             setIsSubmitting(false);
         }
     };
+    const handleAvatarSubmit = async (e)=>{
+        e.preventDefault();
+        setIsSubmitting(true);
+        setMessage("");
+        try {
+            const res = await fetch("/api/account/avatar", {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({
+                    username,
+                    avatar: selectedAvatar
+                })
+            });
+            const json = await res.json();
+            if (!res.ok) throw new Error(json.message);
+            setMessage(json.message);
+            if (selectedAvatar) setAvatar(selectedAvatar);
+            closeAllForms();
+        } catch (err) {
+            setMessage(err instanceof Error ? err.message : "Unknown error");
+        } finally{
+            setIsSubmitting(false);
+        }
+    };
     const UpdateButton = (param)=>{
         let { onClick, text } = param;
         return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
             onClick: onClick,
             type: "submit",
-            className: "w-full px-4 py-2 rounded-lg text-white transition-colors\n                  ".concat(isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"),
+            className: "w-full px-4 py-2 rounded-lg text-white transition-colors\n                ".concat(isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"),
             disabled: isSubmitting,
             children: text
         }, void 0, false, {
             fileName: "[project]/src/app/dashboard/account/page.tsx",
-            lineNumber: 92,
+            lineNumber: 111,
             columnNumber: 5
         }, this);
     };
@@ -125,19 +156,19 @@ function AccountPage() {
                 children: t("accountSettings")
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                lineNumber: 105,
+                lineNumber: 124,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "mb-6 text-center",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                        src: "/avatar.ico",
+                        src: avatar || "/avatar.ico",
                         alt: "avatar",
                         className: "w-32 h-32 rounded-full mx-auto"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 108,
+                        lineNumber: 127,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -145,17 +176,113 @@ function AccountPage() {
                         children: username
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 109,
+                        lineNumber: 128,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                lineNumber: 107,
+                lineNumber: 126,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "space-y-3",
+                className: "space-y-3 mt-8",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "flex justify-between items-center",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h2", {
+                                className: "text-lg font-medium text-gray-700 dark:text-gray-100",
+                                children: t("avatar")
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/account/page.tsx",
+                                lineNumber: 134,
+                                columnNumber: 11
+                            }, this),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>setShowAvatarForm(!showAvatarForm),
+                                className: "px-3 py-1 text-sm rounded text-white bg-blue-500 hover:bg-blue-600",
+                                children: showAvatarForm ? t("cancel") : t("edit")
+                            }, void 0, false, {
+                                fileName: "[project]/src/app/dashboard/account/page.tsx",
+                                lineNumber: 135,
+                                columnNumber: 11
+                            }, this)
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/app/dashboard/account/page.tsx",
+                        lineNumber: 133,
+                        columnNumber: 9
+                    }, this),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden\n                    ".concat(showAvatarForm ? "max-h-60 opacity-100" : "max-h-0 opacity-0"),
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
+                            onSubmit: handleAvatarSubmit,
+                            className: "space-y-2",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "flex flex-wrap gap-4 justify-center",
+                                    children: [
+                                        1,
+                                        2,
+                                        3,
+                                        4,
+                                        5,
+                                        6,
+                                        7,
+                                        8,
+                                        9,
+                                        10
+                                    ].map((i)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                            src: "/identicon".concat(i, ".png"),
+                                            alt: "avatar".concat(i),
+                                            className: "w-16 h-16 rounded-full cursor-pointer ".concat(selectedAvatar === "/identicon".concat(i, ".png") ? "border-2 border-blue-500" : ""),
+                                            onClick: ()=>setSelectedAvatar("/identicon".concat(i, ".png"))
+                                        }, i, false, {
+                                            fileName: "[project]/src/app/dashboard/account/page.tsx",
+                                            lineNumber: 150,
+                                            columnNumber: 17
+                                        }, this))
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/account/page.tsx",
+                                    lineNumber: 148,
+                                    columnNumber: 13
+                                }, this),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UpdateButton, {
+                                    onClick: handleAvatarSubmit,
+                                    text: t("updateAvatar")
+                                }, void 0, false, {
+                                    fileName: "[project]/src/app/dashboard/account/page.tsx",
+                                    lineNumber: 161,
+                                    columnNumber: 13
+                                }, this)
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/app/dashboard/account/page.tsx",
+                            lineNumber: 147,
+                            columnNumber: 11
+                        }, this)
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/dashboard/account/page.tsx",
+                        lineNumber: 143,
+                        columnNumber: 9
+                    }, this),
+                    !showAvatarForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
+                        className: "text-sm text-gray-600 dark:text-gray-400",
+                        children: t("editAvatarTip")
+                    }, void 0, false, {
+                        fileName: "[project]/src/app/dashboard/account/page.tsx",
+                        lineNumber: 165,
+                        columnNumber: 11
+                    }, this)
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/app/dashboard/account/page.tsx",
+                lineNumber: 132,
+                columnNumber: 7
+            }, this),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "space-y-3 mt-8",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "flex justify-between items-center",
@@ -165,7 +292,7 @@ function AccountPage() {
                                 children: t("username")
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                lineNumber: 115,
+                                lineNumber: 172,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -177,17 +304,17 @@ function AccountPage() {
                                 children: showUsernameForm ? t("cancel") : t("edit")
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                lineNumber: 116,
+                                lineNumber: 173,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 114,
+                        lineNumber: 171,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden\n                      ".concat(showUsernameForm ? "max-h-40 opacity-100" : "max-h-0 opacity-0"),
+                        className: "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden\n                    ".concat(showUsernameForm ? "max-h-40 opacity-100" : "max-h-0 opacity-0"),
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                             onSubmit: handleUsernameSubmit,
                             className: "space-y-2",
@@ -200,7 +327,7 @@ function AccountPage() {
                                     className: "w-full p-3 border rounded focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                    lineNumber: 132,
+                                    lineNumber: 189,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UpdateButton, {
@@ -208,18 +335,18 @@ function AccountPage() {
                                     text: t("updateUsername")
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                    lineNumber: 139,
+                                    lineNumber: 196,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/account/page.tsx",
-                            lineNumber: 131,
+                            lineNumber: 188,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 127,
+                        lineNumber: 184,
                         columnNumber: 9
                     }, this),
                     !showUsernameForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -227,13 +354,13 @@ function AccountPage() {
                         children: t("editUsernameTip")
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 144,
+                        lineNumber: 201,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                lineNumber: 113,
+                lineNumber: 170,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -247,7 +374,7 @@ function AccountPage() {
                                 children: t("password")
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                lineNumber: 151,
+                                lineNumber: 208,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -256,17 +383,17 @@ function AccountPage() {
                                 children: showPasswordForm ? t("cancel") : t("edit")
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                lineNumber: 152,
+                                lineNumber: 209,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 150,
+                        lineNumber: 207,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden\n                      ".concat(showPasswordForm ? "max-h-60 opacity-100" : "max-h-0 opacity-0"),
+                        className: "transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden\n                    ".concat(showPasswordForm ? "max-h-60 opacity-100" : "max-h-0 opacity-0"),
                         children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
                             onSubmit: handlePasswordSubmit,
                             className: "space-y-2",
@@ -280,7 +407,7 @@ function AccountPage() {
                                     className: "w-full p-3 border rounded focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                    lineNumber: 165,
+                                    lineNumber: 222,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -292,7 +419,7 @@ function AccountPage() {
                                     className: "w-full p-3 border rounded focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                    lineNumber: 173,
+                                    lineNumber: 230,
                                     columnNumber: 13
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(UpdateButton, {
@@ -300,18 +427,18 @@ function AccountPage() {
                                     text: t("updatePassword")
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/account/page.tsx",
-                                    lineNumber: 181,
+                                    lineNumber: 238,
                                     columnNumber: 13
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/account/page.tsx",
-                            lineNumber: 164,
+                            lineNumber: 221,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 160,
+                        lineNumber: 217,
                         columnNumber: 9
                     }, this),
                     !showPasswordForm && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -319,13 +446,13 @@ function AccountPage() {
                         children: t("editPasswordTip")
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/account/page.tsx",
-                        lineNumber: 186,
+                        lineNumber: 243,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                lineNumber: 149,
+                lineNumber: 206,
                 columnNumber: 7
             }, this),
             message && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -333,18 +460,19 @@ function AccountPage() {
                 children: message
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/account/page.tsx",
-                lineNumber: 191,
+                lineNumber: 248,
                 columnNumber: 9
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/account/page.tsx",
-        lineNumber: 104,
+        lineNumber: 123,
         columnNumber: 5
     }, this);
 }
-_s(AccountPage, "MANergZlbK2hWY7GDjNQGfaPxv4=", false, function() {
+_s(AccountPage, "Mh1pRyUqcOJMYuQrTyrNrXL/efQ=", false, function() {
     return [
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"],
         __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"],
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"]
     ];

@@ -1,10 +1,12 @@
+// app/contexts/UsernameContext.tsx  （路径可保持原样）
 "use client";
 import { createContext, useContext, useState, useEffect, ReactNode } from "react";
-
 
 type Ctx = {
   username: string;
   setUsername: (u: string) => void;
+  avatar: string;                 
+  setAvatar: (a: string) => void; 
   dark: boolean;
   toggleDark: () => void;
   font: string;
@@ -16,6 +18,8 @@ type Ctx = {
 const UsernameContext = createContext<Ctx>({
   username: "Admin",
   setUsername: () => {},
+  avatar: "/avatar.ico",         
+  setAvatar: () => {},
   dark: false,
   toggleDark: () => {},
   font: "16",
@@ -28,28 +32,29 @@ export const useUsername = () => useContext(UsernameContext);
 
 export const UsernameProvider = ({ children }: { children: ReactNode }) => {
   const [username, setUsername] = useState("Admin");
-  const [dark, setDark]   = useState(false);
-  const [font, setFont]   = useState("16");
-  const [zoom, setZoom]   = useState("100");
+  const [avatar, setAvatar]   = useState("/avatar.ico"); 
+  const [dark, setDark]       = useState(false);
+  const [font, setFont]       = useState("16");
+  const [zoom, setZoom]       = useState("100");
 
   useEffect(() => {
-    // 从 localStorage 读取设置
-    const storedDark = localStorage.getItem("dark") === "true";
+    /* 从 localStorage 读取 */
     setUsername(localStorage.getItem("username") || "Admin");
-    setDark(storedDark);
+    setAvatar(localStorage.getItem("avatar") || "/avatar.ico");
+    setDark(localStorage.getItem("dark") === "true");
     setFont(localStorage.getItem("font") || "16");
     setZoom(localStorage.getItem("zoom") || "100");
-    
-    // 立即应用暗模式类名
-    document.documentElement.classList.toggle("dark", storedDark);
+    document.documentElement.classList.toggle("dark", localStorage.getItem("dark") === "true");
   }, []);
 
   useEffect(() => {
+    /* 写入 localStorage */
     localStorage.setItem("username", username);
+    localStorage.setItem("avatar", avatar);
     localStorage.setItem("dark", String(dark));
     localStorage.setItem("font", font);
     localStorage.setItem("zoom", zoom);
-  }, [username, dark, font, zoom]);
+  }, [username, avatar, dark, font, zoom]);
 
   useEffect(() => {
     document.documentElement.classList.toggle("dark", dark);
@@ -62,6 +67,8 @@ export const UsernameProvider = ({ children }: { children: ReactNode }) => {
       value={{
         username,
         setUsername,
+        avatar,       
+        setAvatar,    
         dark,
         toggleDark: () => setDark((d) => !d),
         font,

@@ -186,6 +186,7 @@ module.exports = mod;
 // app/api/news/[id]/route.ts
 __turbopack_context__.s({
     "DELETE": ()=>DELETE,
+    "GET": ()=>GET,
     "PUT": ()=>PUT
 });
 var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$lib$2f$db$2e$ts__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/src/lib/db.ts [app-route] (ecmascript) <module evaluation>");
@@ -213,13 +214,15 @@ async function PUT(req, { params }) {
     try {
         const { id } = await params;
         const body = await req.json();
-        const { title, content, date, published } = body;
+        const { title, content, date, published, username, avatar } = body;
         await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`
       UPDATE news
       SET title = ${title},
           content = ${content},
           date = ${date},
-          published = ${published}
+          published = ${published},
+          username = ${username},
+          avatar = ${avatar}
       WHERE id = ${Number(id)}
     `;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
@@ -229,6 +232,27 @@ async function PUT(req, { params }) {
         console.error('PUT /api/news/[id] error:', err);
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: 'Update failed'
+        }, {
+            status: 500
+        });
+    }
+}
+async function GET(_req, { params }) {
+    try {
+        const { id } = await params;
+        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM news WHERE id = ${Number(id)}`;
+        if (rows.length === 0) {
+            return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+                message: 'Not found'
+            }, {
+                status: 404
+            });
+        }
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(rows[0]);
+    } catch (err) {
+        console.error(err);
+        return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
+            message: 'Server error'
         }, {
             status: 500
         });

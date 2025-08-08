@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 162, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/lib/db.ts"],"sourcesContent":["// lib/db.ts\nexport { sql } from '@vercel/postgres';"],"names":[],"mappings":"AAAA,YAAY;;AACZ","debugId":null}},
+    {"offset": {"line": 185, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/app/api/news/management/route.ts"],"sourcesContent":["// app/api/news/me/route.ts\nimport { sql } from '@/lib/db';\nimport { NextRequest, NextResponse } from 'next/server';\n\nexport async function GET(req: NextRequest) {\n  const username = req.nextUrl.searchParams.get('u');\n  if (!username) return NextResponse.json([], { status: 400 });\n\n  const { rows } = await sql`\n    SELECT * FROM news\n    WHERE username = ${username}\n    ORDER BY date DESC\n  `;\n  return NextResponse.json(rows);\n}"],"names":[],"mappings":"AAAA,2BAA2B;;;;AAC3B;AAAA;AACA;;;AAEO,eAAe,IAAI,GAAgB;IACxC,MAAM,WAAW,IAAI,OAAO,CAAC,YAAY,CAAC,GAAG,CAAC;IAC9C,IAAI,CAAC,UAAU,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC,EAAE,EAAE;QAAE,QAAQ;IAAI;IAE1D,MAAM,EAAE,IAAI,EAAE,GAAG,MAAM,mLAAA,CAAA,MAAG,CAAC;;qBAER,EAAE,SAAS;;EAE9B,CAAC;IACD,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;AAC3B","debugId":null}}]
+}

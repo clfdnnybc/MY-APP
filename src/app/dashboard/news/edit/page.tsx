@@ -4,12 +4,15 @@
 import { useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
+import { useUsername } from '@/app/UsernameContext';
 
 interface NewsForm {
   title: string;
   content: string;
   date: string;
   published: boolean;
+  username: string;
+  avatar: string;
 }
 
 export default function NewsEditPage() {
@@ -18,11 +21,14 @@ export default function NewsEditPage() {
   const searchParams = useSearchParams();
   const id = searchParams.get('id');            // 编辑模式
   const [loading, setLoading] = useState(false);
+  const { username, avatar } = useUsername();
   const [form, setForm] = useState<NewsForm>({
     title: '',
     content: '',
     date: new Date().toISOString().split('T')[0],
     published: true,
+    username,
+    avatar,
   });
 
   /* ---------- 编辑模式：拉取旧数据 ---------- */
@@ -36,8 +42,10 @@ export default function NewsEditPage() {
         setForm({
           title: data.title || '',
           content: data.content || '',
-          date: data.date || new Date().toISOString().split('T')[0],
+          date:  new Date().toISOString().split('T')[0],
           published: data.published || false,
+          username: username,
+          avatar: avatar,
         });
       } catch {
         alert(t('fetchError'));
@@ -72,7 +80,7 @@ export default function NewsEditPage() {
 
   /* ---------- 渲染 ---------- */
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md">
+    <div className="max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-md shadow-md">
       <h1 className="text-2xl font-bold mb-6">
         {id ? t('editNews') : t('addNews')}
       </h1>

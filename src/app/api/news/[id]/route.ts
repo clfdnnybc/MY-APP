@@ -25,13 +25,15 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await req.json();
-    const { title, content, date, published } = body;
+    const { title, content, date, published, username, avatar  } = body;
     await sql`
       UPDATE news
       SET title = ${title},
           content = ${content},
           date = ${date},
-          published = ${published}
+          published = ${published},
+          username = ${username},
+          avatar = ${avatar}
       WHERE id = ${Number(id)}
     `;
     return NextResponse.json({ message: 'Updated' });

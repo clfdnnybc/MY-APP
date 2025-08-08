@@ -195,7 +195,7 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$serv
 ;
 async function GET() {
     try {
-        const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM news WHERE published = true ORDER BY date DESC`;
+        const rows = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`SELECT * FROM news WHERE published = true ORDER BY date DESC`;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json(rows);
     } catch (error) {
         console.error('Database error:', error);
@@ -207,10 +207,10 @@ async function GET() {
 async function POST(req) {
     try {
         const body = await req.json();
-        const { title, content, date, published } = body;
+        const { title, content, date, published, username, avatar } = body;
         const { rows } = await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`
-      INSERT INTO news (title, content, date, published)
-      VALUES (${title}, ${content}, ${date}, ${published})
+      INSERT INTO news (title, content, date, published, username, avatar)
+      VALUES (${title}, ${content}, ${date}, ${published}, ${username}, ${avatar})
       RETURNING id
     `;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({

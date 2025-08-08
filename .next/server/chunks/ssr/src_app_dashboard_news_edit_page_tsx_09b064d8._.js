@@ -12,7 +12,9 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-ssr] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$index$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/index.js [app-ssr] (ecmascript) <module evaluation>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/useTranslation.js [app-ssr] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/UsernameContext.tsx [app-ssr] (ecmascript)");
 'use client';
+;
 ;
 ;
 ;
@@ -23,11 +25,14 @@ function NewsEditPage() {
     const searchParams = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useSearchParams"])();
     const id = searchParams.get('id'); // 编辑模式
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])(false);
+    const { username, avatar } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useUsername"])();
     const [form, setForm] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useState"])({
         title: '',
         content: '',
         date: new Date().toISOString().split('T')[0],
-        published: true
+        published: true,
+        username,
+        avatar
     });
     /* ---------- 编辑模式：拉取旧数据 ---------- */ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["useEffect"])(()=>{
         if (!id) return;
@@ -39,8 +44,10 @@ function NewsEditPage() {
                 setForm({
                     title: data.title || '',
                     content: data.content || '',
-                    date: data.date || new Date().toISOString().split('T')[0],
-                    published: data.published || false
+                    date: new Date().toISOString().split('T')[0],
+                    published: data.published || false,
+                    username: username,
+                    avatar: avatar
                 });
             } catch  {
                 alert(t('fetchError'));
@@ -75,14 +82,14 @@ function NewsEditPage() {
         }
     };
     /* ---------- 渲染 ---------- */ return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "max-w-3xl mx-auto p-6 bg-white rounded-md shadow-md",
+        className: "max-w-3xl mx-auto p-6 bg-white dark:bg-gray-800 rounded-md shadow-md",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("h1", {
                 className: "text-2xl font-bold mb-6",
                 children: id ? t('editNews') : t('addNews')
             }, void 0, false, {
                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                lineNumber: 76,
+                lineNumber: 84,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("form", {
@@ -96,7 +103,7 @@ function NewsEditPage() {
                                 children: t('title')
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 83,
+                                lineNumber: 91,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -110,13 +117,13 @@ function NewsEditPage() {
                                 className: "w-full border rounded p-2 focus:ring-2 focus:ring-blue-500"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 84,
+                                lineNumber: 92,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                        lineNumber: 82,
+                        lineNumber: 90,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -126,7 +133,7 @@ function NewsEditPage() {
                                 children: t('content')
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 95,
+                                lineNumber: 103,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("textarea", {
@@ -140,13 +147,13 @@ function NewsEditPage() {
                                 className: "w-full border rounded p-2 focus:ring-2 focus:ring-blue-500"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 96,
+                                lineNumber: 104,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                        lineNumber: 94,
+                        lineNumber: 102,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -156,7 +163,7 @@ function NewsEditPage() {
                                 children: t('date')
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 107,
+                                lineNumber: 115,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
@@ -170,13 +177,13 @@ function NewsEditPage() {
                                 className: "w-full border rounded p-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 108,
+                                lineNumber: 116,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                        lineNumber: 106,
+                        lineNumber: 114,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -192,20 +199,20 @@ function NewsEditPage() {
                                 className: "mr-2"
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 119,
+                                lineNumber: 127,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("label", {
                                 children: t('published')
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 125,
+                                lineNumber: 133,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                        lineNumber: 118,
+                        lineNumber: 126,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -218,7 +225,7 @@ function NewsEditPage() {
                                 children: t('cancel')
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 130,
+                                lineNumber: 138,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$server$2f$route$2d$modules$2f$app$2d$page$2f$vendored$2f$ssr$2f$react$2d$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$ssr$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -228,25 +235,25 @@ function NewsEditPage() {
                                 children: loading ? t('saving') : t('save')
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                                lineNumber: 137,
+                                lineNumber: 145,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                        lineNumber: 129,
+                        lineNumber: 137,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-                lineNumber: 80,
+                lineNumber: 88,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/news/edit/page.tsx",
-        lineNumber: 75,
+        lineNumber: 83,
         columnNumber: 5
     }, this);
 }

@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { useTranslation } from 'react-i18next';
 import { useRouter } from 'next/navigation';
+import { useUsername } from "@/app/UsernameContext";
 
 interface NewsItem {
   id: number;
@@ -10,6 +11,8 @@ interface NewsItem {
   content: string;
   date: string;
   published: boolean;
+  username: string;
+  avatar: string;
 }
 
 export default function NewsManagementPage() {
@@ -18,16 +21,17 @@ export default function NewsManagementPage() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { username } = useUsername();
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        const response = await fetch('/api/news/all');
+        const response = await fetch(`/api/news/management?u=${username}`);
         if (!response.ok) throw new Error('Failed to fetch news');
         
-        const json = await response.json();
-        if (!Array.isArray(json.rows)) throw new Error('Invalid data format');
-        setNews(json.rows);
+        
+        const data = await response.json();
+        setNews(data);
         setError(null);
       } catch (err) {
         console.error('Fetch error:', err);
@@ -158,6 +162,7 @@ export default function NewsManagementPage() {
           </thead>
           <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
             {news.map(item => (
+              
               <tr key={item.id} className="hover:bg-gray-50 dark:hover:bg-gray-900">
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="text-sm font-medium text-gray-900 dark:text-gray-200">

@@ -9,6 +9,8 @@ interface NewsItem {
   content: string;
   date: string;
   published: boolean;
+  username: string;
+  avatar: string;
 }
 
 export default function DashboardHome() {
@@ -16,29 +18,22 @@ export default function DashboardHome() {
   const [news, setNews] = useState<NewsItem[]>([]);
   const [loading, setLoading] = useState(true);
   const [fetchError, setFetchError] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
         const response = await fetch('/api/news');
+        if (!response.ok) throw new Error('Failed to fetch news');
         
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        
-        const data = await response.json();
-        
-        // 确保数据是数组
-        if (!Array.isArray(data)) {
-          throw new Error('Invalid data format received');
-        }
-        
-        setNews(data);
-        setFetchError(null);
-      } catch (error) {
-        console.error('Fetch error:', error);
-        setFetchError(error instanceof Error ? error.message : 'Unknown error occurred');
-        setNews([]); // 设置为空数组以显示空状态
+        const json = await response.json();
+        if (!Array.isArray(json.rows)) throw new Error('Invalid data format');
+        setNews(json.rows);
+        setError(null);
+      } catch (err) {
+        console.error('Fetch error:', err);
+        setError(err instanceof Error ? err.message : 'Unknown error');
+        setNews([]);
       } finally {
         setLoading(false);
       }
@@ -124,13 +119,18 @@ export default function DashboardHome() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {news.map(item => (
-          <Link href={`/news/${item.id}`} key={item.id}>
-            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition-shadow">
+          <Link href={`dashboard/news/${item.id}`} key={item.id}>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 cursor-pointer hover:shadow-lg transition-shadow relative">
               <h2 className="text-lg font-semibold mb-2 truncate">{item.title}</h2>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
-                {new Date(item.date).toLocaleDateString()}
-              </p>
-              <p className="text-sm text-gray-700 dark:text-gray-200 line-clamp-3">
+              <div className="h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
+              <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400 mb-2">
+                <span>{new Date(item.date).toLocaleDateString()}</span>
+                <div className="flex items-center space-x-1">
+                  <span>{item.username}</span>
+                  <img src={item.avatar} alt="avatar" className="w-5 h-5 rounded-full" />
+                </div>
+              </div>
+              <p className="text-sm text-gray-800 dark:text-gray-200 line-clamp-3">
                 {item.content}
               </p>
             </div>

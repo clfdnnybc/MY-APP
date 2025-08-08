@@ -21,6 +21,7 @@ export default function DashboardLayout({ children }: Props) {
     setMounted(true);
   }, []);
   const { username } = useUsername();
+  const { avatar } = useUsername();
   const handleLogout = () => {
     setShowLogout(false);
     setTimeout(() => router.push("/login"), 500);
@@ -46,7 +47,7 @@ export default function DashboardLayout({ children }: Props) {
   const menuItems: MenuItem[] = [
     
     { label: t("dashboard"), href: "/dashboard", icon: "icon-[mynaui--home]" },
-    { label: t("newsManagement"), href: "/dashboard/news", icon: "icon-[mynaui--home]" },
+    { label: t("newsManagement"), href: "/dashboard/news", icon: "icon-[hugeicons--news]" },
     { label: t("account"), href: "/dashboard/account", icon: "icon-[mynaui--user]" },
     { label: t("settings"), href: "/dashboard/settings", icon: "icon-[mynaui--cog-four]" },
     { label: t("logout"), action: handleLogoutClick, icon: "icon-[mynaui--logout]" },
@@ -113,7 +114,7 @@ export default function DashboardLayout({ children }: Props) {
           <div className="ml-auto relative group">
             <button className="flex items-center space-x-2 bg-white dark:bg-black p-2 rounded-lg">
               <span className="text-sm text-gray-600 dark:text-gray-200">{username}</span>
-              <img src="/avatar.ico" alt="avatar" className="w-8 h-8 rounded-full object-cover" />
+              <img src={avatar || "/avatar.ico"} alt="avatar" className="w-8 h-8 rounded-full object-cover" />
             </button>
 
             <div className="absolute top-full left-0 right-0 h-2" />
@@ -126,7 +127,7 @@ export default function DashboardLayout({ children }: Props) {
                          p-4 space-y-3 pointer-events-none group-hover:pointer-events-auto"
             >
               <div className="flex items-center space-x-3">
-                <img src="/avatar.ico" alt="avatar" className="w-10 h-10 rounded-full object-cover" />
+                <img src={avatar || "/avatar.ico"} alt="avatar" className="w-10 h-10 rounded-full object-cover" />
                 <span className="font-medium text-gray-800 dark:text-gray-200">{username}</span>
               </div>
 

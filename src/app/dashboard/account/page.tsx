@@ -1,24 +1,27 @@
+// app/dashboard/account/page.tsx
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { useUsername } from "../../UsernameContext";
-import { useTranslation } from "react-i18next"; 
-
+import { useTranslation } from "react-i18next";
 
 export default function AccountPage() {
   const { username, setUsername } = useUsername();
+  const { avatar, setAvatar } = useUsername();
   const [showUsernameForm, setShowUsernameForm] = useState(false);
   const [showPasswordForm, setShowPasswordForm] = useState(false);
+  const [showAvatarForm, setShowAvatarForm] = useState(false);
   const [newUsername, setNewUsername] = useState("");
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
+  const [selectedAvatar, setSelectedAvatar] = useState<string | null>(null);
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const { t } = useTranslation(); // 新增
+  const { t } = useTranslation();
 
   const closeAllForms = () => {
     setShowUsernameForm(false);
     setShowPasswordForm(false);
+    setShowAvatarForm(false);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,18 +85,34 @@ export default function AccountPage() {
     }
   };
 
-  const UpdateButton = ({
-    onClick,
-    text,
-  }: {
-    onClick: (e: React.FormEvent) => void | Promise<void>;
-    text: string;
-  }) => (
+  const handleAvatarSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    setMessage("");
+    try {
+      const res = await fetch("/api/account/avatar", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ username, avatar: selectedAvatar }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.message);
+      setMessage(json.message);
+      if (selectedAvatar) setAvatar(selectedAvatar);
+      closeAllForms();
+    } catch (err: unknown) {
+      setMessage(err instanceof Error ? err.message : "Unknown error");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const UpdateButton = ({ onClick, text }: { onClick: (e: React.FormEvent) => void | Promise<void>; text: string }) => (
     <button
       onClick={onClick}
-      type="submit"   
+      type="submit"
       className={`w-full px-4 py-2 rounded-lg text-white transition-colors
-                  ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
+                ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-500 hover:bg-blue-600"}`}
       disabled={isSubmitting}
     >
       {text}
@@ -105,12 +124,50 @@ export default function AccountPage() {
       <h1 className="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-6">{t("accountSettings")}</h1>
 
       <div className="mb-6 text-center">
-        <img src="/avatar.ico" alt="avatar" className="w-32 h-32 rounded-full mx-auto" />
+        <img src={avatar|| "/avatar.ico" } alt="avatar" className="w-32 h-32 rounded-full mx-auto" />
         <p className="text-gray-700 dark:text-gray-200 text-center mt-2">{username}</p>
       </div>
 
+      {/* Avatar Section */}
+      <div className="space-y-3 mt-8">
+        <div className="flex justify-between items-center">
+          <h2 className="text-lg font-medium text-gray-700 dark:text-gray-100">{t("avatar")}</h2>
+          <button
+            onClick={() => setShowAvatarForm(!showAvatarForm)}
+            className="px-3 py-1 text-sm rounded text-white bg-blue-500 hover:bg-blue-600"
+          >
+            {showAvatarForm ? t("cancel") : t("edit")}
+          </button>
+        </div>
+
+        <div
+          className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden
+                    ${showAvatarForm ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
+        >
+          <form onSubmit={handleAvatarSubmit} className="space-y-2">
+            <div className="flex flex-wrap gap-4 justify-center">
+              {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((i) => (
+                <img
+                  key={i}
+                  src={`/identicon${i}.png`}
+                  alt={`avatar${i}`}
+                  className={`w-16 h-16 rounded-full cursor-pointer ${
+                    selectedAvatar === `/identicon${i}.png` ? "border-2 border-blue-500" : ""
+                  }`}
+                  onClick={() => setSelectedAvatar(`/identicon${i}.png`)}
+                />
+              ))}
+            </div>
+            <UpdateButton onClick={handleAvatarSubmit} text={t("updateAvatar")} />
+          </form>
+        </div>
+        {!showAvatarForm && (
+          <p className="text-sm text-gray-600 dark:text-gray-400">{t("editAvatarTip")}</p>
+        )}
+      </div>
+
       {/* Username Section */}
-      <div className="space-y-3">
+      <div className="space-y-3 mt-8">
         <div className="flex justify-between items-center">
           <h2 className="text-lg font-medium text-gray-700 dark:text-gray-100">{t("username")}</h2>
           <button
@@ -126,7 +183,7 @@ export default function AccountPage() {
 
         <div
           className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden
-                      ${showUsernameForm ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}
+                    ${showUsernameForm ? "max-h-40 opacity-100" : "max-h-0 opacity-0"}`}
         >
           <form onSubmit={handleUsernameSubmit} className="space-y-2">
             <input
@@ -159,7 +216,7 @@ export default function AccountPage() {
 
         <div
           className={`transition-[max-height,opacity] duration-300 ease-in-out overflow-hidden
-                      ${showPasswordForm ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
+                    ${showPasswordForm ? "max-h-60 opacity-100" : "max-h-0 opacity-0"}`}
         >
           <form onSubmit={handlePasswordSubmit} className="space-y-2">
             <input

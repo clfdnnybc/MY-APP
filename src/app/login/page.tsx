@@ -17,7 +17,7 @@ export default function SignupPage() {
   const { t, i18n } = useTranslation();
   const [lang, setLang] = useState(i18n.language);
   const router = useRouter();
-  const { setUsername } = useUsername();
+  const { setUsername, setAvatar } = useUsername();
   
 
   useEffect(() => {
@@ -53,7 +53,7 @@ export default function SignupPage() {
     }
 
     try {
-      const res = await fetch("/api/auth", {
+      const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -68,7 +68,9 @@ export default function SignupPage() {
       setMessage(json.message);
       if (mode === "login") {
         localStorage.setItem("username", data.username);
+        localStorage.setItem('avatar', json.avatar);
         setUsername(data.username);
+        setAvatar(json.avatar);
         setTimeout(() => router.push("/dashboard"), 300);
       } else {
         setMode("login");

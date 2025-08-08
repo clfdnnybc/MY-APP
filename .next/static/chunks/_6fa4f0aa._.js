@@ -14,9 +14,11 @@ var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__$3c$module__evaluation$3e$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/index.js [app-client] (ecmascript) <module evaluation>");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/react-i18next/dist/es/useTranslation.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/node_modules/next/navigation.js [app-client] (ecmascript)");
+var __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/src/app/UsernameContext.tsx [app-client] (ecmascript)");
 ;
 var _s = __turbopack_context__.k.signature();
 'use client';
+;
 ;
 ;
 ;
@@ -28,16 +30,16 @@ function NewsManagementPage() {
     const [news, setNews] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
     const [loading, setLoading] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(true);
     const [error, setError] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    const { username } = (0, __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"])();
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "NewsManagementPage.useEffect": ()=>{
             const fetchNews = {
                 "NewsManagementPage.useEffect.fetchNews": async ()=>{
                     try {
-                        const response = await fetch('/api/news/all');
+                        const response = await fetch("/api/news/management?u=".concat(username));
                         if (!response.ok) throw new Error('Failed to fetch news');
-                        const json = await response.json();
-                        if (!Array.isArray(json.rows)) throw new Error('Invalid data format');
-                        setNews(json.rows);
+                        const data = await response.json();
+                        setNews(data);
                         setError(null);
                     } catch (err) {
                         console.error('Fetch error:', err);
@@ -73,7 +75,7 @@ function NewsManagementPage() {
                         className: "h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-8"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 63,
+                        lineNumber: 67,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -93,17 +95,17 @@ function NewsManagementPage() {
                                                 className: "px-6 py-3 h-12 bg-gray-200 dark:bg-gray-700 rounded"
                                             }, i, false, {
                                                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                lineNumber: 69,
+                                                lineNumber: 73,
                                                 columnNumber: 21
                                             }, this))
                                     }, void 0, false, {
                                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                        lineNumber: 67,
+                                        lineNumber: 71,
                                         columnNumber: 17
                                     }, this)
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                    lineNumber: 66,
+                                    lineNumber: 70,
                                     columnNumber: 15
                                 }, this),
                                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -120,44 +122,44 @@ function NewsManagementPage() {
                                                         className: "h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                        lineNumber: 78,
+                                                        lineNumber: 82,
                                                         columnNumber: 25
                                                     }, this)
                                                 }, j, false, {
                                                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                    lineNumber: 77,
+                                                    lineNumber: 81,
                                                     columnNumber: 23
                                                 }, this))
                                         }, i, false, {
                                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                            lineNumber: 75,
+                                            lineNumber: 79,
                                             columnNumber: 19
                                         }, this))
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                    lineNumber: 73,
+                                    lineNumber: 77,
                                     columnNumber: 15
                                 }, this)
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                            lineNumber: 65,
+                            lineNumber: 69,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 64,
+                        lineNumber: 68,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                lineNumber: 62,
+                lineNumber: 66,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/dashboard/news/page.tsx",
-            lineNumber: 61,
+            lineNumber: 65,
             columnNumber: 7
         }, this);
     }
@@ -174,7 +176,7 @@ function NewsManagementPage() {
                     ]
                 }, void 0, true, {
                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                    lineNumber: 94,
+                    lineNumber: 98,
                     columnNumber: 9
                 }, this),
                 /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -183,13 +185,13 @@ function NewsManagementPage() {
                     children: t('retry')
                 }, void 0, false, {
                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                    lineNumber: 97,
+                    lineNumber: 101,
                     columnNumber: 9
                 }, this)
             ]
         }, void 0, true, {
             fileName: "[project]/src/app/dashboard/news/page.tsx",
-            lineNumber: 93,
+            lineNumber: 97,
             columnNumber: 7
         }, this);
     }
@@ -204,7 +206,7 @@ function NewsManagementPage() {
                         children: "📰"
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 110,
+                        lineNumber: 114,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("h3", {
@@ -212,7 +214,7 @@ function NewsManagementPage() {
                         children: t('noNewsTitle')
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 111,
+                        lineNumber: 115,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("p", {
@@ -220,7 +222,7 @@ function NewsManagementPage() {
                         children: t('noNewsDescription')
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 114,
+                        lineNumber: 118,
                         columnNumber: 11
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -230,23 +232,23 @@ function NewsManagementPage() {
                             children: t('createFirstNews')
                         }, void 0, false, {
                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                            lineNumber: 118,
+                            lineNumber: 122,
                             columnNumber: 13
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 117,
+                        lineNumber: 121,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                lineNumber: 109,
+                lineNumber: 113,
                 columnNumber: 9
             }, this)
         }, void 0, false, {
             fileName: "[project]/src/app/dashboard/news/page.tsx",
-            lineNumber: 108,
+            lineNumber: 112,
             columnNumber: 7
         }, this);
     }
@@ -261,7 +263,7 @@ function NewsManagementPage() {
                         children: t('newsManagement')
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 130,
+                        lineNumber: 134,
                         columnNumber: 9
                     }, this),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$client$2f$app$2d$dir$2f$link$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["default"], {
@@ -273,25 +275,25 @@ function NewsManagementPage() {
                                     className: "icon-[mynaui--plus] mr-2 w-5 h-5"
                                 }, void 0, false, {
                                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                    lineNumber: 135,
+                                    lineNumber: 139,
                                     columnNumber: 13
                                 }, this),
                                 t('addNews')
                             ]
                         }, void 0, true, {
                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                            lineNumber: 134,
+                            lineNumber: 138,
                             columnNumber: 11
                         }, this)
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 133,
+                        lineNumber: 137,
                         columnNumber: 9
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                lineNumber: 129,
+                lineNumber: 133,
                 columnNumber: 7
             }, this),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -309,7 +311,7 @@ function NewsManagementPage() {
                                             children: t('title')
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                            lineNumber: 145,
+                                            lineNumber: 149,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -317,7 +319,7 @@ function NewsManagementPage() {
                                             children: t('status')
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                            lineNumber: 148,
+                                            lineNumber: 152,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -325,7 +327,7 @@ function NewsManagementPage() {
                                             children: t('date')
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                            lineNumber: 151,
+                                            lineNumber: 155,
                                             columnNumber: 15
                                         }, this),
                                         /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("th", {
@@ -333,18 +335,18 @@ function NewsManagementPage() {
                                             children: t('actions')
                                         }, void 0, false, {
                                             fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                            lineNumber: 154,
+                                            lineNumber: 158,
                                             columnNumber: 15
                                         }, this)
                                     ]
                                 }, void 0, true, {
                                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                    lineNumber: 144,
+                                    lineNumber: 148,
                                     columnNumber: 13
                                 }, this)
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                lineNumber: 143,
+                                lineNumber: 147,
                                 columnNumber: 11
                             }, this),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("tbody", {
@@ -359,21 +361,6 @@ function NewsManagementPage() {
                                                     children: item.title
                                                 }, void 0, false, {
                                                     fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                    lineNumber: 163,
-                                                    columnNumber: 19
-                                                }, this)
-                                            }, void 0, false, {
-                                                fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                lineNumber: 162,
-                                                columnNumber: 17
-                                            }, this),
-                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
-                                                className: "px-6 py-4 whitespace-nowrap",
-                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full ".concat(item.published ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'),
-                                                    children: item.published ? t('published') : t('draft')
-                                                }, void 0, false, {
-                                                    fileName: "[project]/src/app/dashboard/news/page.tsx",
                                                     lineNumber: 168,
                                                     columnNumber: 19
                                                 }, this)
@@ -383,11 +370,26 @@ function NewsManagementPage() {
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
+                                                className: "px-6 py-4 whitespace-nowrap",
+                                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "px-2 inline-flex text-xs leading-5 font-semibold rounded-full ".concat(item.published ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300'),
+                                                    children: item.published ? t('published') : t('draft')
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/app/dashboard/news/page.tsx",
+                                                    lineNumber: 173,
+                                                    columnNumber: 19
+                                                }, this)
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/app/dashboard/news/page.tsx",
+                                                lineNumber: 172,
+                                                columnNumber: 17
+                                            }, this),
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
                                                 className: "px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400",
                                                 children: new Date(item.date).toLocaleDateString()
                                             }, void 0, false, {
                                                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                lineNumber: 176,
+                                                lineNumber: 181,
                                                 columnNumber: 17
                                             }, this),
                                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("td", {
@@ -399,7 +401,7 @@ function NewsManagementPage() {
                                                         children: t('view')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                        lineNumber: 180,
+                                                        lineNumber: 185,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -408,7 +410,7 @@ function NewsManagementPage() {
                                                         children: t('edit')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                        lineNumber: 186,
+                                                        lineNumber: 191,
                                                         columnNumber: 19
                                                     }, this),
                                                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -417,30 +419,30 @@ function NewsManagementPage() {
                                                         children: t('delete')
                                                     }, void 0, false, {
                                                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                        lineNumber: 192,
+                                                        lineNumber: 197,
                                                         columnNumber: 19
                                                     }, this)
                                                 ]
                                             }, void 0, true, {
                                                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                                lineNumber: 179,
+                                                lineNumber: 184,
                                                 columnNumber: 17
                                             }, this)
                                         ]
                                     }, item.id, true, {
                                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                        lineNumber: 161,
+                                        lineNumber: 166,
                                         columnNumber: 15
                                     }, this))
                             }, void 0, false, {
                                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                                lineNumber: 159,
+                                lineNumber: 163,
                                 columnNumber: 11
                             }, this)
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 142,
+                        lineNumber: 146,
                         columnNumber: 9
                     }, this),
                     news.length === 0 && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -448,26 +450,27 @@ function NewsManagementPage() {
                         children: t('noNews')
                     }, void 0, false, {
                         fileName: "[project]/src/app/dashboard/news/page.tsx",
-                        lineNumber: 205,
+                        lineNumber: 210,
                         columnNumber: 11
                     }, this)
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/app/dashboard/news/page.tsx",
-                lineNumber: 141,
+                lineNumber: 145,
                 columnNumber: 7
             }, this)
         ]
     }, void 0, true, {
         fileName: "[project]/src/app/dashboard/news/page.tsx",
-        lineNumber: 128,
+        lineNumber: 132,
         columnNumber: 5
     }, this);
 }
-_s(NewsManagementPage, "Rhvz1Ncn/GQCeU7bVJszCOu6U7M=", false, function() {
+_s(NewsManagementPage, "hKg3GHpWzTiBrgvDjnU9q216L1w=", false, function() {
     return [
         __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$react$2d$i18next$2f$dist$2f$es$2f$useTranslation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useTranslation"],
-        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"]
+        __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$navigation$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRouter"],
+        __TURBOPACK__imported__module__$5b$project$5d2f$src$2f$app$2f$UsernameContext$2e$tsx__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useUsername"]
     ];
 });
 _c = NewsManagementPage;

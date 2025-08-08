@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "sources": [],
+  "sections": [
+    {"offset": {"line": 6, "column": 0}, "map": {"version":3,"sources":[],"names":[],"mappings":"","debugId":null}},
+    {"offset": {"line": 162, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/lib/db.ts"],"sourcesContent":["// lib/db.ts\nexport { sql } from '@vercel/postgres';"],"names":[],"mappings":"AAAA,YAAY;;AACZ","debugId":null}},
+    {"offset": {"line": 185, "column": 0}, "map": {"version":3,"sources":["file:///Users/57block/my-app/src/app/api/account/avatar/route.ts"],"sourcesContent":["// app/api/account/avatar/route.ts\nimport { sql } from '@/lib/db';\nimport { NextResponse } from 'next/server';\n\nexport async function PUT(req: Request) {\n  try {\n    const { username, avatar } = await req.json();\n    await sql`\n      UPDATE users\n      SET avatar = ${avatar}\n      WHERE username = ${username}\n    `;\n    return NextResponse.json({ message: 'Avatar updated successfully' });\n  } catch (err) {\n    console.error('Error updating avatar:', err);\n    return NextResponse.json({ message: 'Failed to update avatar' }, { status: 500 });\n  }\n}"],"names":[],"mappings":"AAAA,kCAAkC;;;;AAClC;AAAA;AACA;;;AAEO,eAAe,IAAI,GAAY;IACpC,IAAI;QACF,MAAM,EAAE,QAAQ,EAAE,MAAM,EAAE,GAAG,MAAM,IAAI,IAAI;QAC3C,MAAM,mLAAA,CAAA,MAAG,CAAC;;mBAEK,EAAE,OAAO;uBACL,EAAE,SAAS;IAC9B,CAAC;QACD,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,SAAS;QAA8B;IACpE,EAAE,OAAO,KAAK;QACZ,QAAQ,KAAK,CAAC,0BAA0B;QACxC,OAAO,gIAAA,CAAA,eAAY,CAAC,IAAI,CAAC;YAAE,SAAS;QAA0B,GAAG;YAAE,QAAQ;QAAI;IACjF;AACF","debugId":null}}]
+}

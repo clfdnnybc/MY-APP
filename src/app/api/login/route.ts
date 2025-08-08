@@ -22,5 +22,19 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ message: 'Invalid credentials' }, { status: 401 });
   }
 
-  return NextResponse.json({ message: 'Login success' });
+  return NextResponse.json({
+    message: 'Login success',
+    avatar: user.avatar || '/avatar.ico', // 兜底默认
+  });
 }
+
+export async function GET() {
+  try {
+    const rows = await sql`SELECT * FROM users WHERE username = `;
+    return NextResponse.json(rows);
+  } catch (error) {
+    console.error('Database error:', error);
+    return NextResponse.json([], { status: 200 });
+  }
+}
+
