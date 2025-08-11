@@ -200,6 +200,11 @@ async function PUT(req) {
       SET avatar = ${avatar}
       WHERE username = ${username}
     `;
+        await __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f40$vercel$2f$postgres$2f$dist$2f$chunk$2d$7IR77QAQ$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__$3c$locals$3e$__["sql"]`
+      UPDATE news
+      SET avatar = ${avatar}
+      WHERE username = ${username}
+    `;
         return __TURBOPACK__imported__module__$5b$project$5d2f$node_modules$2f$next$2f$server$2e$js__$5b$app$2d$route$5d$__$28$ecmascript$29$__["NextResponse"].json({
             message: 'Avatar updated successfully'
         });

@@ -15,6 +15,7 @@ export async function PUT(req: NextRequest) {
     }
 
     await sql`UPDATE users SET username = ${newUsername} WHERE username = ${storedUsername}`;
+    await sql`UPDATE news SET username = ${newUsername} WHERE username = ${storedUsername}`;
     return NextResponse.json({ message: 'Username updated successfully' });
   } catch (error: unknown) {
     const msg = error instanceof Error ? error.message : 'Unknown error';

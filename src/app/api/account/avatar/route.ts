@@ -10,6 +10,11 @@ export async function PUT(req: Request) {
       SET avatar = ${avatar}
       WHERE username = ${username}
     `;
+    await sql`
+      UPDATE news
+      SET avatar = ${avatar}
+      WHERE username = ${username}
+    `;
     return NextResponse.json({ message: 'Avatar updated successfully' });
   } catch (err) {
     console.error('Error updating avatar:', err);
